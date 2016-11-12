@@ -59,3 +59,8 @@ alias y='xclip'
 alias yy='mpv $(p) --fs --volume=70 --save-position-on-quit --force-window=immediate'
 alias term='urxvtc'
 alias formats='youtube-dl $(p) -F'
+alias ys='mpsyt /'
+
+# Environment variables
+
+export PATH=$HOME/.local/bin:$PATH
