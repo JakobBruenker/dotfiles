@@ -2,6 +2,10 @@
 call plug#begin('~/.vim/plugged')
 
 " Make sure to use single quotes
+
 Plug 'junegunn/vim-easy-align'
+Plug 'scrooloose/nerdtree'
+
+Plug '~/dotfiles/customvimstuff'
 
 call plug#end()
