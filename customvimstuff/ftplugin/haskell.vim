@@ -44,5 +44,6 @@ highlight hsNumber ctermfg=6 cterm=italic
 highlight hsFloat ctermfg=6 cterm=italic
 highlight hs_DeclareFunction ctermfg=2
 highlight hsDelimiter ctermfg=1
+highlight hsCharacter ctermfg=6 cterm=italic
 
 " }}}

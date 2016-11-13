@@ -17,7 +17,7 @@ let mapleader      = ","
 set list listchars=tab:├╶,trail:⋅
 set showbreak=↪
 
-set fillchars=vert:│
+let &fillchars = 'vert: '
 
 " Remember to hold Shift while selecting to get regular terminal mouse
 " selection back!
@@ -85,7 +85,7 @@ if !exists('g:airline_symbols')
 endif
 let g:airline_symbols['maxlinenr'] = ' '
 let g:airline_theme = 'luna'
-let g:airline_right_sep = '▝'
+"let g:airline_right_sep = '▝'
 
 " }}}
 

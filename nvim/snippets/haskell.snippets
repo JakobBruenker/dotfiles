@@ -1,6 +1,10 @@
 snippet case
 	case ${1:_expr} of
-	  ${2:_pattern} -> ${3:_result}
+	  ${2:_pat} -> ${3:_result}
+
+snippet lcase
+	\case ${1:_pat} -> ${2:_result}
+	`repeat(" ", 6 + strlen(getline(line('.'))))`${3:_pat_1} -> ${4:_result_1}
 
 snippet do
 	do ${1:_action}
@@ -22,7 +26,7 @@ snippet mod
 	$2
 
 snippet if
-	if | ${1:_cond} - ${2:_result}
+	if | ${1:_cond} -> ${2:_result}
 	   | ${4:otherwise} -> ${3:_result_1}
 
 snippet im
