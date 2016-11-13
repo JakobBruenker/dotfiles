@@ -41,8 +41,12 @@ call plug#begin('~/.vim/plugged')
 
 " Make sure to use single quotes
 
+Plug 'garbas/vim-snipmate'
+Plug 'itchyny/vim-haskell-indent'
 Plug 'junegunn/vim-easy-align'
+Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'romainl/flattened'
+Plug 'tomtom/tlib_vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-repeat'

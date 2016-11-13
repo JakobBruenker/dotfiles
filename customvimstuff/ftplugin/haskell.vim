@@ -23,3 +23,14 @@ autocmd FileType haskell setlocal omnifunc=necoghc#omnifunc
 let g:necoghc_enable_detailed_browse = 1
 
 " }}}
+
+" {{{ indentation
+
+set textwidth=79
+set smartindent
+set autoindent
+set softtabstop=2
+set shiftwidth=2
+set expandtab
+
+" }}}
