@@ -56,9 +56,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 
-Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
 Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
 
 Plug '~/dotfiles/customvimstuff'
@@ -125,5 +123,16 @@ color flattened_dark
 highlight Normal ctermbg=NONE
 highlight folded cterm=NONE ctermbg=NONE
 highlight SpecialKey ctermfg=0 ctermbg=NONE
+highlight Comment ctermfg=10 cterm=italic
+
+" get highlight group of word under cursor
+nmap <Leader>sI :call <SID>SynStack()<CR>
+
+function! <SID>SynStack()
+	if !exists("*synstack")
+		return
+	endif
+	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
+endfunc
 
 " }}}

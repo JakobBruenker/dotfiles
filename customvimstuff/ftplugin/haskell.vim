@@ -1,20 +1,3 @@
-" {{{ ghc-mod mappings
-
-nnoremap <silent> <LocalLeader>gl :w<CR>:GhcModType<CR>
-nnoremap <silent> <LocalLeader>gs :GhcModType<CR>
-nnoremap <silent> <LocalLeader>gr :GhcModTypeClear<CR>
-nnoremap <silent> <LocalLeader>gc :GhcModTypeClear<CR>:w<CR>:GhcModSplitFunCase<CR>w
-nnoremap <silent> <LocalLeader>gg :w<CR>:GhcModSigCodegen<CR>j0w
-inoremap <silent> <LocalLeader>gg <Esc>:w<CR>:GhcModSigCodegen<CR>j0w
-
-" }}}
-
-" {{{ compilation stuff
-
-autocmd BufWritePost *.hs GhcModCheckAndLintAsync
-
-" }}}
-
 " {{{ necoghc
 
 " Disable haskell-vim omnifunc
@@ -49,6 +32,17 @@ vnoremap ,s. :EasyAlign<CR><C-X>-><CR>
 
 " {{{ Colorstuff
 
-highlight hsModuleName cterm=NONE
+highlight Special cterm=italic
+highlight hsModuleName ctermfg=6 cterm=italic
+highlight hsImportLabel ctermfg=5
+highlight hsModuleStartLabel ctermfg=2
+highlight hsStructure ctermfg=2
+highlight hsStatement ctermfg=2
+highlight hsVarSym ctermfg=2
+highlight hsString ctermfg=9 cterm=italic
+highlight hsNumber ctermfg=6 cterm=italic
+highlight hsFloat ctermfg=6 cterm=italic
+highlight hs_DeclareFunction ctermfg=2
+highlight hsDelimiter ctermfg=1
 
 " }}}
