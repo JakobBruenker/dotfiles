@@ -64,3 +64,5 @@ alias ys='mpsyt /'
 # Environment variables
 
 export PATH=$HOME/.local/bin:$PATH
+
+prompt pure

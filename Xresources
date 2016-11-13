@@ -73,9 +73,9 @@ Xft.hintstyle: hintfull
 !urxvt*font: xft:Bitstream Vera Sans Mono-12
 !urxvt*boldFont: xft:Bitstream Vera Sans Mono-12:bold
 !urxvt*italicFont: xft:Bitstream Vera Sans Mono-12:italic
-urxvt*font: xft:Monaco:size=11
-urxvt*boldFont: xft:Monaco:size=11:bold
-urxvt*italicFont: xft:Monaco:size=11:italic
+urxvt*font: xft:Monaco for Powerline:size=11
+urxvt*boldFont: xft:Monaco for Powerline:size=11:bold
+urxvt*italicFont: xft:Monaco for Powerline:size=11:italic
 
 urxvt.iso14755: false
 urxvt.iso14755_52: false
