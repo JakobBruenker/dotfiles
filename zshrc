@@ -49,7 +49,7 @@ alias ...='cd ../..'
 alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias cd-='cd -'
-alias cdd='cd -'
+alias cdd='popd'
 alias df='df -h'
 alias mem='free -h'
 alias t='date | sed -r ''s/(\w+ ){3}(\w+:\w+):\w+( \w+){2}/\2/'''
@@ -60,9 +60,12 @@ alias yy='mpv $(p) --fs --volume=70 --save-position-on-quit --force-window=immed
 alias term='urxvtc'
 alias formats='youtube-dl $(p) -F'
 alias ys='mpsyt /'
+alias yyl='yy --ytdl-format=136+bestaudio'
 
 # Environment variables
 
 export PATH=$HOME/.local/bin:$PATH
 
+# prompt should really be set in .zpreztorc, but this way, I get the clock from
+# paradox with the pure prompt
 prompt pure

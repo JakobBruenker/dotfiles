@@ -24,13 +24,31 @@ let g:necoghc_enable_detailed_browse = 1
 
 " }}}
 
-" {{{ indentation
+" {{{ Assorted settings
 
-set textwidth=79
-set smartindent
-set autoindent
-set softtabstop=2
-set shiftwidth=2
-set expandtab
+setlocal textwidth=79
+setlocal smartindent
+setlocal autoindent
+setlocal softtabstop=2
+setlocal shiftwidth=2
+setlocal expandtab
+
+" }}}
+
+" {{{ Assorted mappings
+
+function! NextOrNewLine()
+	return (getline(line('.') + 1) =~? '\v^\s+$') ? "\<ESC>jA" : "\<CR>"
+endfunction
+
+inoremap <expr> <CR> (pumvisible() ? "<C-E>" : "") . NextOrNewLine()
+nnoremap ,s. vip:EasyAlign<CR><C-X>-><CR>
+vnoremap ,s. :EasyAlign<CR><C-X>-><CR>
+
+" }}}
+
+" {{{ Colorstuff
+
+highlight hsModuleName cterm=NONE
 
 " }}}

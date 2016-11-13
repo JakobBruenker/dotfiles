@@ -1,73 +1,64 @@
 snippet case
-	case ${1} of
-	  ${2:_} -> ${3:undefined}
+	case ${1:_expr} of
+	  ${2:_pattern} -> ${3:_result}
 
 snippet do
-
-	  do ${1:undefined}
-	     ${2:undefined}
+	do ${1:_action}
+	`repeat(" ", 3 + strlen(getline(line('.'))))`${2:_action_1}
 
 snippet wh
-
-	where
-	  ${1:fn} = ${2:undefined}
+	where ${1:fn} = ${2:_body}
 
 snippet let
-	let ${1} = ${2}
-	in ${3}
+	let ${1:var} = ${2:_expr}
+	in ${3:_body}
 
 snippet new
-	newtype ${1:name} = $1 { un$1 :: ${2} }
+	newtype ${1:TypeName} = $1 { un$1 :: ${2:Type} }
 	  deriving ($4)
 
 snippet mod
-	module ${1} (
-	  ${2},
-	) where
+	module ${1:ModuleName} where
+	$2
 
 snippet if
-	if ${1}
-	then ${2}
-	else ${3}
+	if | ${1:_cond} - ${2:_result}
+	   | ${4:otherwise} -> ${3:_result_1}
 
 snippet im
-	import qualified ${1:Data.Text} as ${2:T}
+	import qualified ${1:Module} as ${2:M}
 
 snippet iq
-	import qualified ${1:Data.Text} as ${2:T}
+	import qualified ${1:Module} as ${2:M}
 
 snippet cl
-	class ${1:Name} where
-	  ${2:name} :: ${3}
+	class ${1:ClassName} where
+	  ${2:fn} :: ${3:Type}
 
 snippet in
 	instance ${1:Class} ${2:Type} where
-	  ${3}
 
 snippet rec
-	data ${1} = ${2}
-		{ ${3} :: ${4:T}
-		} deriving (${6:classes})
+	data ${1:TypeName} = $1
+		{ ${2:field} :: ${3:Type}
+		} deriving (${4})
 
 snippet ff
-	foreign import ccall safe "${1:cfunction}" ${2:name}
-	    :: ${3:function}
+	foreign import ccall safe "${1:cfunction}" ${2:fname}
+	  :: ${3:function}
 
-snippet pra 
+snippet lan
 	{-# LANGUAGE ${1} #-}
 
-snippet case
-
-	case ${1} of
-	     ${2} -> ${3}
-
-
 snippet \
-	(\ ${1} -> ${2:undefined})
+	(\\${1} -> ${2:_hole})
 
 snippet bar
 	-------------------------------------------------------------------------------
 	-- ${1}
+	-------------------------------------------------------------------------------
+
+snippet line
 	-------------------------------------------------------------------------------
 
 snippet mm
@@ -184,7 +175,8 @@ snippet crazy
 	{-# LANGUAGE ExistentialQuantification #-}
 
 snippet main
-	main = return ()
+	main :: IO ()
+	main = ${1:_action}
 
 snippet opt
 	{-# OPTIONS_GHC ${1} #-}
@@ -200,10 +192,10 @@ snippet nowarn
 snippet box
 	--------------------------------------------------------------------
 	-- |
-	-- Module    :   
-	-- Copyright :  (c) <author> 2016
-	-- License   :  MIT
-	-- Maintainer:  <email>
+	-- Module    :  ${1:ModuleName}
+	-- Copyright :  (c) ${2:AuthorName} `strftime("%Y")`
+	-- License   :  ${3:MIT}
+	-- Maintainer:  ${4:Email}
 	-- Stability :  experimental
 	-- Portability: non-portable
 	--
@@ -218,8 +210,27 @@ snippet inl
 snippet up
 	{-# UNPACK #-}
 
+snippet hl
+	_hole
+
 snippet un
 	undefined
+
 snippet er
 	error "${1}"
 
+snippet header
+	{-# OPTIONS_GHC -Wall #-}
+
+	{-# LANGUAGE NoImplicitPrelude #-}
+
+	{-# LANGUAGE LambdaCase        #-}
+	{-# LANGUAGE MultiWayIf        #-}
+	{-# LANGUAGE OverloadedStrings #-}
+
+	module ${1:ModuleName} where
+
+	import ClassyPrelude
+	import Scientific
+
+	default(Integer, Scientific, Text)
