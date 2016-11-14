@@ -8,6 +8,7 @@ set smartcase
 set nohlsearch
 
 set undofile
+set noswapfile
 
 set completeopt=longest,menuone,preview
 
@@ -45,6 +46,7 @@ Plug 'garbas/vim-snipmate'
 Plug 'itchyny/vim-haskell-indent'
 Plug 'junegunn/vim-easy-align'
 Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'neomake/neomake'
 Plug 'romainl/flattened'
 Plug 'tomtom/tlib_vim'
 Plug 'tpope/vim-commentary'
@@ -58,6 +60,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
+Plug 'Twinside/vim-haskellFold', { 'for': 'haskell' }
 
 Plug '~/dotfiles/customvimstuff'
 
@@ -101,6 +104,12 @@ set wildmode=longest:full
 " }}}
 
 " {{{ MAPPINGS
+
+noremap <Leader>, ;
+noremap <Leader>: ,
+
+nnoremap za zA
+nnoremap zA za
 
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)

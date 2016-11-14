@@ -7,6 +7,12 @@ let g:necoghc_enable_detailed_browse = 1
 
 " }}}
 
+" {{{ neomake
+
+
+
+" }}}
+
 " {{{ Assorted settings
 
 setlocal textwidth=79
@@ -45,5 +51,6 @@ highlight hsFloat ctermfg=6 cterm=italic
 highlight hs_DeclareFunction ctermfg=2
 highlight hsDelimiter ctermfg=1
 highlight hsCharacter ctermfg=6 cterm=italic
+highlight QuickFixLine ctermbg=NONE ctermfg=7
 
 " }}}

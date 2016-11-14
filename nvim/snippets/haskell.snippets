@@ -27,7 +27,7 @@ snippet mod
 
 snippet if
 	if | ${1:_cond} -> ${2:_result}
-	   | ${4:otherwise} -> ${3:_result_1}
+	`repeat(" ", 3 + strlen(getline(line('.'))))`| ${4:otherwise} -> ${3:_result_1}
 
 snippet im
 	import qualified ${1:Module} as ${2:M}
@@ -98,10 +98,10 @@ snippet containers
 	import qualified Data.Sequence     as Seq
 	import qualified Data.Set          as Set
 
-snippet str 
+snippet str
 	{-# LANGUAGE OverloadedStrings #-}
 
-snippet gadt 
+snippet gadt
 	{-# LANGUAGE GADTs #-}
 
 snippet rank
@@ -231,6 +231,7 @@ snippet header
 	{-# LANGUAGE LambdaCase        #-}
 	{-# LANGUAGE MultiWayIf        #-}
 	{-# LANGUAGE OverloadedStrings #-}
+	{-# LANGUAGE TupleSections     #-}
 
 	module ${1:ModuleName} where
 
