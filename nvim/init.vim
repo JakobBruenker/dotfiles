@@ -24,6 +24,12 @@ let &fillchars = 'vert: '
 " selection back!
 set mouse=a
 
+augroup SignCol
+	autocmd!
+	autocmd BufEnter * sign define dummy
+	autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
+augroup END
+
 " }}}
 
 " {{{ VIMRC HELPERS
@@ -42,6 +48,7 @@ call plug#begin('~/.vim/plugged')
 
 " Make sure to use single quotes
 
+Plug 'airblade/vim-gitgutter'
 Plug 'garbas/vim-snipmate'
 Plug 'itchyny/vim-haskell-indent'
 Plug 'junegunn/vim-easy-align'
@@ -65,6 +72,14 @@ Plug 'Twinside/vim-haskellFold', { 'for': 'haskell' }
 Plug '~/dotfiles/customvimstuff'
 
 call plug#end()
+
+" }}}
+
+" {{{ GITGUTTER
+
+let g:gitgutter_map_keys = 0
+let g:gitgutter_sign_column_always = 1
+let g:gitgutter_max_signs = 1000
 
 " }}}
 
@@ -105,6 +120,38 @@ set wildmode=longest:full
 
 " {{{ MAPPINGS
 
+let s:qfopen = 0
+
+function! QuickfixToggle()
+	if s:qfopen
+		cclose
+		let s:qfopen = 0
+	else
+		copen
+		wincmd k
+		let s:qfopen = 1
+	endif
+endfunction
+
+function QuickfixOpen()
+	if !s:qfopen
+		copen
+		wincmd k
+		let s:qfopen = 1
+	endif
+endfunction
+
+imap <Leader>a <Plug>snipMateNextOrTrigger
+
+nnoremap <silent> Q :call QuickfixToggle()<CR>
+nnoremap <silent> <Leader>n :cnext<CR>zO
+nnoremap <silent> <Leader>r :cc<CR>zO
+nnoremap <silent> <Leader>p :cprevious<CR>zO
+nnoremap <silent> <Leader>b :buffer 1<CR>
+
+nnoremap <Leader>t <C-]>
+nnoremap <Leader>c <C-t>
+
 noremap <Leader>, ;
 noremap <Leader>: ,
 
@@ -119,7 +166,14 @@ nnoremap ? ?\v
 
 noremap g: g;
 
-inoremap <expr> <Leader>n (pumvisible() ? "<C-E>" : "") . "<C-N>"
+function! s:NextOrNewLine()
+	return (col('.') >= col('$') && getline(line('.') + 1) =~? '\v^\s+$') ? "\<ESC>jA" : "\<CR>"
+endfunction
+
+inoremap <expr> <CR> (pumvisible() ? "<C-Y>" : "") . <SID>NextOrNewLine()
+inoremap <expr> <TAB> (pumvisible() ? "<C-N>" : "<TAB>")
+inoremap <S-TAB> <C-P>
+
 inoremap <Leader>f <C-X><C-F>
 
 " }}}
@@ -130,9 +184,15 @@ set background=dark
 
 color flattened_dark
 highlight Normal ctermbg=NONE
-highlight folded cterm=NONE ctermbg=NONE
+highlight folded cterm=italic ctermbg=NONE
 highlight SpecialKey ctermfg=0 ctermbg=NONE
 highlight Comment ctermfg=10 cterm=italic
+highlight TODO ctermbg=NONE
+highlight gitGutterAdd ctermfg=2 ctermbg=NONE
+highlight gitGutterChange ctermfg=3 ctermbg=NONE
+highlight gitGutterDelete ctermfg=1 ctermbg=NONE
+highlight gitGutterChangeDelete ctermbg=NONE ctermfg=3
+highlight LineNr ctermbg=NONE
 
 " get highlight group of word under cursor
 nmap <Leader>sI :call <SID>SynStack()<CR>
@@ -142,6 +202,6 @@ function! <SID>SynStack()
 		return
 	endif
 	echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
-endfunc
+endfunction
 
 " }}}

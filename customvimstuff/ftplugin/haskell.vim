@@ -9,7 +9,14 @@ let g:necoghc_enable_detailed_browse = 1
 
 " {{{ neomake
 
+augroup Neomake
+	autocmd!
+	autocmd BufWritePost *.hs Neomake!
+	autocmd BufWritePost *.hs call QuickfixOpen()
+	autocmd BufWritePost *.hs call jobstart(['bash', '-c', 'hothasktags ./**/*.hs > tags'])
+augroup END
 
+let &makeprg = 'stack build --exec "hlint src"'
 
 " }}}
 
@@ -26,11 +33,6 @@ setlocal expandtab
 
 " {{{ Assorted mappings
 
-function! NextOrNewLine()
-	return (getline(line('.') + 1) =~? '\v^\s+$') ? "\<ESC>jA" : "\<CR>"
-endfunction
-
-inoremap <expr> <CR> (pumvisible() ? "<C-E>" : "") . NextOrNewLine()
 nnoremap ,s. vip:EasyAlign<CR><C-X>-><CR>
 vnoremap ,s. :EasyAlign<CR><C-X>-><CR>
 
