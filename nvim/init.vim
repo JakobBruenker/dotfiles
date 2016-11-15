@@ -149,6 +149,8 @@ nnoremap <silent> <Leader>r :cc<CR>zO
 nnoremap <silent> <Leader>p :cprevious<CR>zO
 nnoremap <silent> <Leader>b :buffer 1<CR>
 
+nnoremap <Leader>o <C-o>
+nnoremap <Leader>i <C-i>
 nnoremap <Leader>t <C-]>
 nnoremap <Leader>c <C-t>
 

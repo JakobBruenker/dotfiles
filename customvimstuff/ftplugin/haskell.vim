@@ -13,7 +13,7 @@ augroup Neomake
 	autocmd!
 	autocmd BufWritePost *.hs Neomake!
 	autocmd BufWritePost *.hs call QuickfixOpen()
-	autocmd BufWritePost *.hs call jobstart(['bash', '-c', 'hothasktags ./**/*.hs > tags'])
+	autocmd BufWritePost *.hs call jobstart(['bash', '-O', 'globstar', '-c', 'hothasktags ./**/*.hs > tags'])
 augroup END
 
 let &makeprg = 'stack build --exec "hlint src"'
