@@ -18,6 +18,8 @@ let mapleader      = ","
 set list listchars=tab:├╶,trail:⋅
 set showbreak=↪
 
+set scrolloff=8
+
 let &fillchars = 'vert: '
 
 " Remember to hold Shift while selecting to get regular terminal mouse
@@ -133,7 +135,7 @@ function! QuickfixToggle()
 	endif
 endfunction
 
-function QuickfixOpen()
+function! QuickfixOpen()
 	if !s:qfopen
 		copen
 		wincmd k
@@ -153,6 +155,11 @@ nnoremap <Leader>o <C-o>
 nnoremap <Leader>i <C-i>
 nnoremap <Leader>t <C-]>
 nnoremap <Leader>c <C-t>
+nnoremap <Leader>u <C-u>
+nnoremap <Leader>d <C-d>
+
+nnoremap p p=']
+nnoremap P P=']
 
 noremap <Leader>, ;
 noremap <Leader>: ,
