@@ -1,7 +1,5 @@
 " {{{ VARIOUS SETTINGS
 
-set nocompatible
-
 set ignorecase
 set smartcase
 
@@ -11,6 +9,11 @@ set undofile
 set noswapfile
 
 set completeopt=longest,menuone,preview
+
+" Display all matching files when tab completing
+set wildmenu
+set wildmode=longest:full
+
 
 let maplocalleader = ","
 let mapleader      = ","
@@ -53,6 +56,7 @@ call plug#begin('~/.vim/plugged')
 " Make sure to use single quotes
 
 Plug 'airblade/vim-gitgutter'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'garbas/vim-snipmate'
 Plug 'itchyny/vim-haskell-indent'
 Plug 'junegunn/vim-easy-align'
@@ -80,24 +84,6 @@ Plug 'Twinside/vim-haskellFold', { 'for': 'haskell' }
 Plug '~/dotfiles/customvimstuff'
 
 call plug#end()
-
-" }}}
-
-" {{{ TAGBAR
-
-let s:tbopen = 0
-
-function! TagbarToggle()
-	if s:tbopen
-		TagbarClose
-		let s:tbopen = 0
-	else
-		TagbarOpen
-		let s:tbopen = 1
-	endif
-endfunction
-
-nnoremap <silent> <Leader>tb :call TagbarToggle()<CR>
 
 " }}}
 
@@ -159,17 +145,6 @@ let g:airline#extensions#tabline#enabled = 1
 
 " }}}
 
-" {{{ FINDING FILES
-
-" Search recursively
-set path+=**
-
-" Display all matching files when tab completing
-set wildmenu
-set wildmode=longest:full
-
-" }}}
-
 " {{{ MAPPINGS
 
 function! OpenSession()
@@ -206,6 +181,13 @@ function! QuickfixOpen()
 	endif
 endfunction
 
+function! QuickfixClose()
+	cclose
+	if s:qfopen
+		let s:qfopen = 0
+	endif
+endfunction
+
 function! CheckFold()
 	if foldclosed(line('.')) == -1
 		return ""
@@ -218,20 +200,28 @@ nnoremap <silent> <Leader><Leader><Leader>s :call OpenSession()<CR>
 
 imap <expr> <Leader><CR> (pumvisible() ? "<C-Y>" : "") . '<Plug>snipMateNextOrTrigger'
 
+nnoremap i I
+nnoremap I i
+nnoremap a A
+nnoremap A a
+nnoremap :q<CR> :echo "Temporarily disabled"<CR>
+nnoremap :w<CR> :echo "Temporarily disabled"<CR>
+
 nnoremap <silent> Q :call QuickfixToggle()<CR>
 nnoremap <silent> <expr> <Leader>n ':cnext<CR>' . CheckFold()
 nnoremap <silent> <expr> <Leader>r ':cc<CR>' . CheckFold()
 nnoremap <silent> <expr> <Leader>j ':cprevious<CR>' . CheckFold()
 nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
-nnoremap q: :q
-nnoremap <leader>qq q:
+nnoremap <silent> <Leader>tb :TagbarToggle<CR>
+
+nnoremap <silent> <Leader>p :CtrlPMixed<CR>
 
 nnoremap <silent> <Leader><Leader>h <C-W>h:bprevious<CR>
 nnoremap <silent> <Leader><Leader>n <C-W>h:bnext<CR>
 nnoremap <silent> <Leader><Leader>b <C-W>h:bfirst<CR>
 nnoremap <C-W>_ <C-W>-
 nnoremap <C-W>- <C-W>_
-nnoremap <Leader>wh <C-W>h
+nnoremap <Leader>wm <C-W>h
 nnoremap <Leader>wn <C-W>l
 
 " split up so that this doesn't activate the mapping itself
@@ -248,12 +238,15 @@ nnoremap <silent> <Leader><Leader>d :bdelete<CR>
 nnoremap <silent> <Leader><Leader>!d :bdelete!<CR>
 nnoremap <silent> <Leader><Leader>z :qa<CR>
 nnoremap <silent> <Leader><Leader>!z :qa!<CR>
+nnoremap <silent> <Leader><Leader>w :w<CR>
+inoremap <silent> <Leader><Leader>w <Esc>:w<CR>
+nnoremap <silent> <Leader><Leader>!w :wa<CR>:echom "All files written"<CR>
 
 nnoremap p p=']
 nnoremap P P=']
 
-noremap <Leader>p ;
-noremap <Leader>: ,
+noremap <Leader>+ ;
+noremap <Leader>] ,
 
 nnoremap za zA
 nnoremap zA za
@@ -267,7 +260,7 @@ nnoremap ? ?\v
 noremap g: g;
 
 function! s:NextOrNewLine()
-	return (col('.') >= col('$') && getline(line('.') + 1) =~? '\v^\s+$') ? "\<ESC>jA" : "\<CR>"
+	return (col('.') >= col('$') && getline(line('.') + 1) =~? '\v\s+$') ? "\<Esc>jA" : "\<CR>"
 endfunction
 
 inoremap <expr> <CR> (pumvisible() ? "<C-Y>" : "") . <SID>NextOrNewLine()

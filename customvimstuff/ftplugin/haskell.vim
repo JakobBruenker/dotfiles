@@ -25,8 +25,10 @@ let &makeprg = 'stack build --exec "hlint src"'
 
 augroup Session
 	autocmd BufCreate *.hs mksession! .session.vim
-	autocmd BufDelete *.hs mksession! .session.vim
+	autocmd BufLeave *.hs mksession! .session.vim
 	autocmd BufEnter *.hs mksession! .session.vim
+	autocmd QuitPre *.hs TagbarClose
+	autocmd QuitPre *.hs QuickfixClose()
 	autocmd VimLeavePre *.hs mksession! .session.vim
 augroup END
 
@@ -43,6 +45,9 @@ setlocal expandtab
 
 nnoremap ,s. vip:EasyAlign<CR><C-X>-><CR>
 vnoremap ,s. :EasyAlign<CR><C-X>-><CR>
+
+inoremap <LocalLeader>: <ESC>yypA<Space><ESC>kA<Space>::<Space>
+inoremap -. <Space>-><Space>
 
 " }}}
 

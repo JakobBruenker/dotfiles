@@ -5,4 +5,5 @@ Vim
 -------
 
  - maybe add syntax highlighting to quickfix window
- - fuzzy file finder
+ - make it possible to open a terminal (hopefully not in tab list??)
+ - add haskell refactoring
