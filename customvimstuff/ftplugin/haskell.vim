@@ -27,8 +27,9 @@ augroup Session
 	autocmd BufCreate *.hs mksession! .session.vim
 	autocmd BufLeave *.hs mksession! .session.vim
 	autocmd BufEnter *.hs mksession! .session.vim
-	autocmd QuitPre *.hs TagbarClose
-	autocmd QuitPre *.hs QuickfixClose()
+	autocmd QuitPre * TagbarClose
+	autocmd QuitPre * NERDTreeClose
+	autocmd QuitPre * call QuickfixClose()
 	autocmd VimLeavePre *.hs mksession! .session.vim
 augroup END
 
@@ -48,6 +49,7 @@ vnoremap ,s. :EasyAlign<CR><C-X>-><CR>
 
 inoremap <LocalLeader>: <ESC>yypA<Space><ESC>kA<Space>::<Space>
 inoremap -. <Space>-><Space>
+inoremap :: <Space>::<Space>
 
 " }}}
 

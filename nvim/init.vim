@@ -1,5 +1,6 @@
 " {{{ VARIOUS SETTINGS
 
+set nofoldenable
 set ignorecase
 set smartcase
 
@@ -10,22 +11,33 @@ set noswapfile
 
 set completeopt=longest,menuone,preview
 
+set virtualedit=block
+
 " Display all matching files when tab completing
 set wildmenu
 set wildmode=longest:full
 
-
 let maplocalleader = ","
 let mapleader      = ","
 
-set list listchars=tab:├╶,trail:⋅
-set showbreak=↪
+" We can see the mode in airline anyway
+set noshowmode
+
+set list listchars=tab:├╶,trail:⋅,nbsp:␣
+let &showbreak=' ↪'
+set breakindent
 
 set scrolloff=8
 
 set hidden
+set spell
+set nojoinspaces
 
-let &fillchars = 'vert: '
+set matchpairs+=<:>
+
+set pastetoggle=<F10>
+
+let &fillchars = 'vert: ,fold:·'
 
 " Remember to hold Shift while selecting to get regular terminal mouse
 " selection back!
@@ -57,13 +69,21 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'easymotion/vim-easymotion'
 Plug 'garbas/vim-snipmate'
+Plug 'haya14busa/incsearch-easymotion.vim'
+Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/vim-easyoperator-line'
+Plug 'haya14busa/vim-easyoperator-phrase'
+Plug 'haya14busa/vim-operator-flashy'
 Plug 'itchyny/vim-haskell-indent'
 Plug 'junegunn/vim-easy-align'
+Plug 'kana/vim-operator-user'
 Plug 'majutsushi/tagbar'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'mkitt/tabline.vim'
 Plug 'neomake/neomake'
+Plug 'osyo-manga/vim-over'
 Plug 'romainl/flattened'
 Plug 'scrooloose/nerdtree'
 Plug 'tomtom/tlib_vim'
@@ -84,6 +104,12 @@ Plug 'Twinside/vim-haskellFold', { 'for': 'haskell' }
 Plug '~/dotfiles/customvimstuff'
 
 call plug#end()
+
+" }}}
+
+" {{{ EASYMOTION
+
+let g:EasyMotion_keys='aoeidtns''.pyfgcrlqjkxbmwvzuh:,'
 
 " }}}
 
@@ -189,30 +215,67 @@ function! QuickfixClose()
 endfunction
 
 function! CheckFold()
-	if foldclosed(line('.')) == -1
-		return ""
+	if foldclosed(line('.')) != -1
+		foldopen!
+	endif
+endfunction
+
+function! OpenLocalFold()
+	if foldclosed(line('.')) != -1
+		foldopen!
 	else
-		return "zO"
+		execute (line('.') + 1) . 'foldopen!'
 	endif
 endfunction
 
 nnoremap <silent> <Leader><Leader><Leader>s :call OpenSession()<CR>
 
+nnoremap <Leader>q gwip
+
+vnoremap . :normal .<CR>
+vnoremap < <gv
+vnoremap > >gv
 imap <expr> <Leader><CR> (pumvisible() ? "<C-Y>" : "") . '<Plug>snipMateNextOrTrigger'
 
-nnoremap i I
-nnoremap I i
-nnoremap a A
-nnoremap A a
+vnoremap <Space> I<Space><Esc>gv
+map y <Plug>(operator-flashy)
+map Y <Plug>(operator-flashy)$
 nnoremap :q<CR> :echo "Temporarily disabled"<CR>
 nnoremap :w<CR> :echo "Temporarily disabled"<CR>
 
 nnoremap <silent> Q :call QuickfixToggle()<CR>
-nnoremap <silent> <expr> <Leader>n ':cnext<CR>' . CheckFold()
-nnoremap <silent> <expr> <Leader>r ':cc<CR>' . CheckFold()
-nnoremap <silent> <expr> <Leader>j ':cprevious<CR>' . CheckFold()
+nnoremap <silent> <Leader>n :cnext<CR>:call CheckFold()<CR>
+nnoremap <silent> <Leader>r :cc<CR>:call CheckFold()<CR>
+nnoremap <silent> <Leader>j :cprevious<CR>:call CheckFold()<CR>
 nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
 nnoremap <silent> <Leader>tb :TagbarToggle<CR>
+
+map e <Plug>(easymotion-prefix)
+map j <Plug>(easymotion-j)
+" temporarily disable movement key to get used to EasyMotion
+map l <nop>
+map h <nop>
+noremap ej j
+map k <Plug>(easymotion-k)
+map f <nop>
+map F <nop>
+map t <nop>
+map T <nop>
+map s <Plug>(easymotion-s)
+noremap es s
+map w <Plug>(easymotion-w)
+map W <Plug>(easymotion-W)
+map b <Plug>(easymotion-b)
+map B <Plug>(easymotion-B)
+map E <Plug>(easymotion-E)
+map ge <Plug>(easymotion-ge)
+map gE <Plug>(easymotion-gE)
+map / <Plug>(incsearch-easymotion-/)
+map ? <Plug>(incsearch-easymotion-?)
+
+let g:EasyMotion_smartcase = 1
+
+map <silent> <Leader><Leader>s :OverCommandLine<CR>%s/
 
 nnoremap <silent> <Leader>p :CtrlPMixed<CR>
 
@@ -225,7 +288,7 @@ nnoremap <Leader>wm <C-W>h
 nnoremap <Leader>wn <C-W>l
 
 " split up so that this doesn't activate the mapping itself
-nnoremap <silent> <expr> <Leader>td '/\vTO' . 'DO\|FI' . 'XME\|X' . 'XX<CR>' . CheckFold()
+nnoremap <silent> <expr> <Leader>td '/\vTO' . 'DO\|FI' . 'XME\|X' . "XX\<CR>:call CheckFold()\<CR>"
 
 nnoremap <Leader>o <C-O>
 nnoremap <Leader>i <C-I>
@@ -233,6 +296,8 @@ nnoremap <Leader><Leader>t <C-]>
 nnoremap <Leader><Leader>c <C-t>
 nnoremap <Leader>l <C-U>
 nnoremap <Leader>s <C-D>
+nnoremap <silent> <Leader><Leader>f :set foldenable<CR>
+nnoremap <silent> <Leader><Leader>g :set nofoldenable<CR>
 
 nnoremap <silent> <Leader><Leader>d :bdelete<CR>
 nnoremap <silent> <Leader><Leader>!d :bdelete!<CR>
@@ -242,20 +307,18 @@ nnoremap <silent> <Leader><Leader>w :w<CR>
 inoremap <silent> <Leader><Leader>w <Esc>:w<CR>
 nnoremap <silent> <Leader><Leader>!w :wa<CR>:echom "All files written"<CR>
 
-nnoremap p p=']
-nnoremap P P=']
+nnoremap p p=']<C-O>
+nnoremap P P=']<C-O>
 
 noremap <Leader>+ ;
 noremap <Leader>] ,
 
 nnoremap za zA
 nnoremap zA za
+nnoremap <silent> zo :call OpenLocalFold()<CR>
 
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
-
-nnoremap / /\v
-nnoremap ? ?\v
 
 noremap g: g;
 
@@ -263,9 +326,15 @@ function! s:NextOrNewLine()
 	return (col('.') >= col('$') && getline(line('.') + 1) =~? '\v\s+$') ? "\<Esc>jA" : "\<CR>"
 endfunction
 
+function! s:NextOrNewLineNormal()
+	return (col('.') >= col('$') && getline(line('.') + 1) =~? '\v\s+$') ? "jA" : "i\<CR>"
+endfunction
+
 inoremap <expr> <CR> (pumvisible() ? "<C-Y>" : "") . <SID>NextOrNewLine()
+
 inoremap <expr> <TAB> (pumvisible() ? "<C-N>" : "<TAB>")
 inoremap <S-TAB> <C-P>
+nnoremap <expr> <CR> <SID>NextOrNewLineNormal()
 
 inoremap <Leader>f <C-X><C-F>
 
@@ -289,6 +358,8 @@ highlight LineNr ctermbg=NONE
 highlight VertSplit cterm=NONE ctermbg=23
 highlight StatusLineNC cterm=NONE ctermbg=23
 highlight StatusLine cterm=NONE ctermfg=7 ctermbg=23
+highlight TagbarHighlight ctermfg=7 ctermbg=NONE
+highlight SpellBad ctermbg=NONE
 
 augroup Highlighting
 	autocmd!
