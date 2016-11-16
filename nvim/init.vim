@@ -56,6 +56,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'garbas/vim-snipmate'
 Plug 'itchyny/vim-haskell-indent'
 Plug 'junegunn/vim-easy-align'
+Plug 'majutsushi/tagbar'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'mkitt/tabline.vim'
 Plug 'neomake/neomake'
@@ -79,6 +80,24 @@ Plug 'Twinside/vim-haskellFold', { 'for': 'haskell' }
 Plug '~/dotfiles/customvimstuff'
 
 call plug#end()
+
+" }}}
+
+" {{{ TAGBAR
+
+let s:tbopen = 0
+
+function! TagbarToggle()
+	if s:tbopen
+		TagbarClose
+		let s:tbopen = 0
+	else
+		TagbarOpen
+		let s:tbopen = 1
+	endif
+endfunction
+
+nnoremap <silent> <Leader>tb :call TagbarToggle()<CR>
 
 " }}}
 
@@ -173,7 +192,7 @@ function! QuickfixToggle()
 		cclose
 		let s:qfopen = 0
 	else
-		copen
+		leftabove copen
 		wincmd k
 		let s:qfopen = 1
 	endif
@@ -181,7 +200,7 @@ endfunction
 
 function! QuickfixOpen()
 	if !s:qfopen
-		copen
+		leftabove copen
 		wincmd k
 		let s:qfopen = 1
 	endif
@@ -207,21 +226,23 @@ nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
 nnoremap q: :q
 nnoremap <leader>qq q:
 
-nnoremap <silent> <Leader><Leader>h :bprevious<CR>
-nnoremap <silent> <Leader><Leader>n :bnext<CR>
-nnoremap <silent> <Leader><Leader>b :bfirst<CR>
-nnoremap <C-w>_ <C-W>-
-nnoremap <C-w>- <C-W>_
+nnoremap <silent> <Leader><Leader>h <C-W>h:bprevious<CR>
+nnoremap <silent> <Leader><Leader>n <C-W>h:bnext<CR>
+nnoremap <silent> <Leader><Leader>b <C-W>h:bfirst<CR>
+nnoremap <C-W>_ <C-W>-
+nnoremap <C-W>- <C-W>_
+nnoremap <Leader>wh <C-W>h
+nnoremap <Leader>wn <C-W>l
 
 " split up so that this doesn't activate the mapping itself
 nnoremap <silent> <expr> <Leader>td '/\vTO' . 'DO\|FI' . 'XME\|X' . 'XX<CR>' . CheckFold()
 
-nnoremap <Leader>o <C-o>
-nnoremap <Leader>i <C-i>
+nnoremap <Leader>o <C-O>
+nnoremap <Leader>i <C-I>
 nnoremap <Leader><Leader>t <C-]>
 nnoremap <Leader><Leader>c <C-t>
-nnoremap <Leader>l <C-u>
-nnoremap <Leader>s <C-d>
+nnoremap <Leader>l <C-U>
+nnoremap <Leader>s <C-D>
 
 nnoremap <silent> <Leader><Leader>d :bdelete<CR>
 nnoremap <silent> <Leader><Leader>!d :bdelete!<CR>
