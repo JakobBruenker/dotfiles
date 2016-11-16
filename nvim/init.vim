@@ -20,6 +20,8 @@ set showbreak=↪
 
 set scrolloff=8
 
+set hidden
+
 let &fillchars = 'vert: '
 
 " Remember to hold Shift while selecting to get regular terminal mouse
@@ -37,10 +39,10 @@ augroup END
 " {{{ VIMRC HELPERS
 
 " Edit .vimrc
-nnoremap <Leader>ev :split $MYVIMRC<CR>
+nnoremap <Leader><Leader><Leader>ev :split $MYVIMRC<CR>
 
 " Load .vimrc
-nnoremap <Leader>sv :source $MYVIMRC<CR>
+nnoremap <Leader><Leader><Leader>lv :source $MYVIMRC<CR>
 
 " }}}
 
@@ -55,8 +57,10 @@ Plug 'garbas/vim-snipmate'
 Plug 'itchyny/vim-haskell-indent'
 Plug 'junegunn/vim-easy-align'
 Plug 'MarcWeber/vim-addon-mw-utils'
+Plug 'mkitt/tabline.vim'
 Plug 'neomake/neomake'
 Plug 'romainl/flattened'
+Plug 'scrooloose/nerdtree'
 Plug 'tomtom/tlib_vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-fugitive'
@@ -65,6 +69,7 @@ Plug 'tpope/vim-rhubarb'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'Xuyuanp/nerdtree-git-plugin'
 
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
@@ -74,6 +79,28 @@ Plug 'Twinside/vim-haskellFold', { 'for': 'haskell' }
 Plug '~/dotfiles/customvimstuff'
 
 call plug#end()
+
+" }}}
+
+" {{{ NERDTREE
+
+let g:NERDTreeQuitOnOpen = 1
+
+" }}}
+
+" {{{ NERDTREE-GIT-PLUGIN
+
+let g:NERDTreeIndicatorMapCustom = {
+\ "Modified"  : "~",
+\ "Staged"    : "✚",
+\ "Untracked" : "✭",
+\ "Renamed"   : "➜",
+\ "Unmerged"  : "═",
+\ "Deleted"   : "✖",
+\ "Dirty"     : "≋",
+\ "Clean"     : "✔",
+\ "Unknown"   : "?"
+\ }
 
 " }}}
 
@@ -107,6 +134,10 @@ let g:airline_symbols['maxlinenr'] = ' '
 let g:airline_theme = 'luna'
 "let g:airline_right_sep = '▝'
 
+let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#left_sep = '>'
+"let g:airline#extensions#tabline#left_alt_sep = '>'
+
 " }}}
 
 " {{{ FINDING FILES
@@ -121,6 +152,19 @@ set wildmode=longest:full
 " }}}
 
 " {{{ MAPPINGS
+
+function! OpenSession()
+	let bufnr = bufnr('%')
+	if filereadable('.session.vim')
+		source .session.vim
+		if bufloaded(bufnr)
+			execute 'buffer ' . bufnr
+		endif
+	else
+		echoerr "No session found"
+	endif
+	unlet bufnr
+endfunction
 
 let s:qfopen = 0
 
@@ -143,25 +187,51 @@ function! QuickfixOpen()
 	endif
 endfunction
 
-imap <Leader>a <Plug>snipMateNextOrTrigger
+function! CheckFold()
+	if foldclosed(line('.')) == -1
+		return ""
+	else
+		return "zO"
+	endif
+endfunction
+
+nnoremap <silent> <Leader><Leader><Leader>s :call OpenSession()<CR>
+
+imap <expr> <Leader><CR> (pumvisible() ? "<C-Y>" : "") . '<Plug>snipMateNextOrTrigger'
 
 nnoremap <silent> Q :call QuickfixToggle()<CR>
-nnoremap <silent> <Leader>n :cnext<CR>zO
-nnoremap <silent> <Leader>r :cc<CR>zO
-nnoremap <silent> <Leader>p :cprevious<CR>zO
-nnoremap <silent> <Leader>b :buffer 1<CR>
+nnoremap <silent> <expr> <Leader>n ':cnext<CR>' . CheckFold()
+nnoremap <silent> <expr> <Leader>r ':cc<CR>' . CheckFold()
+nnoremap <silent> <expr> <Leader>j ':cprevious<CR>' . CheckFold()
+nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
+nnoremap q: :q
+nnoremap <leader>qq q:
+
+nnoremap <silent> <Leader><Leader>h :bprevious<CR>
+nnoremap <silent> <Leader><Leader>n :bnext<CR>
+nnoremap <silent> <Leader><Leader>b :bfirst<CR>
+nnoremap <C-w>_ <C-W>-
+nnoremap <C-w>- <C-W>_
+
+" split up so that this doesn't activate the mapping itself
+nnoremap <silent> <expr> <Leader>td '/\vTO' . 'DO\|FI' . 'XME\|X' . 'XX<CR>' . CheckFold()
 
 nnoremap <Leader>o <C-o>
 nnoremap <Leader>i <C-i>
-nnoremap <Leader>t <C-]>
-nnoremap <Leader>c <C-t>
-nnoremap <Leader>u <C-u>
-nnoremap <Leader>d <C-d>
+nnoremap <Leader><Leader>t <C-]>
+nnoremap <Leader><Leader>c <C-t>
+nnoremap <Leader>l <C-u>
+nnoremap <Leader>s <C-d>
+
+nnoremap <silent> <Leader><Leader>d :bdelete<CR>
+nnoremap <silent> <Leader><Leader>!d :bdelete!<CR>
+nnoremap <silent> <Leader><Leader>z :qa<CR>
+nnoremap <silent> <Leader><Leader>!z :qa!<CR>
 
 nnoremap p p=']
 nnoremap P P=']
 
-noremap <Leader>, ;
+noremap <Leader>p ;
 noremap <Leader>: ,
 
 nnoremap za zA
@@ -200,11 +270,22 @@ highlight TODO ctermbg=NONE
 highlight gitGutterAdd ctermfg=2 ctermbg=NONE
 highlight gitGutterChange ctermfg=3 ctermbg=NONE
 highlight gitGutterDelete ctermfg=1 ctermbg=NONE
-highlight gitGutterChangeDelete ctermbg=NONE ctermfg=3
+highlight gitGutterChangeDelete ctermfg=3 ctermbg=NONE
 highlight LineNr ctermbg=NONE
+highlight VertSplit cterm=NONE ctermbg=23
+highlight StatusLineNC cterm=NONE ctermbg=23
+highlight StatusLine cterm=NONE ctermfg=7 ctermbg=23
+
+augroup Highlighting
+	autocmd!
+	autocmd BufEnter * highlight airline_tabhid ctermbg=29
+	autocmd BufEnter * highlight NERDTreeGitStatusDirDirty ctermfg=3
+	autocmd BufEnter * highlight NERDTreeGitStatusModified ctermfg=3
+	autocmd BufEnter * highlight NERDTreeGitStatusUntracked ctermfg=9
+augroup END
 
 " get highlight group of word under cursor
-nmap <Leader>sI :call <SID>SynStack()<CR>
+nmap <Leader><Leader><Leader>yi :call <SID>SynStack()<CR>
 
 function! <SID>SynStack()
 	if !exists("*synstack")

@@ -43,6 +43,7 @@ setopt EXTENDED_GLOB
 
 alias vim='nvim'
 alias vi='vim'
+alias vis='vim -S .session.vim'
 alias v='vi'
 alias ..='cd ..'
 alias ...='cd ../..'
@@ -56,6 +57,7 @@ alias t='date | sed -r ''s/(\w+ ){3}(\w+:\w+):\w+( \w+){2}/\2/'''
 alias ghc='stack ghc'
 alias runghc='stack runghc'
 alias ghci='stack ghci'
+alias pl='pointfree'
 alias p='xclip -o'
 alias y='xclip'
 alias yy='mpv $(p) --fs --volume=70 --save-position-on-quit --force-window=immediate'
@@ -66,7 +68,7 @@ alias yyl='yy --ytdl-format=136+bestaudio'
 
 # Environment variables
 
-export PATH=$HOME/.local/bin:$PATH
+export PATH=$HOME/dotfiles/scripts:$HOME/.local/bin:$PATH
 
 # prompt should really be set in .zpreztorc, but this way, I get the clock from
 # paradox with the pure prompt

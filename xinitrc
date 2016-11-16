@@ -14,6 +14,4 @@ xrandr --output HDMI1 --primary --auto --left-of eDP1 &&
 feh --bg-fill ~/dotfiles/proprietary/background0.jpg &&
 skypeforlinux
 
-urxvtd -q -o -f &
-
 exec dwm

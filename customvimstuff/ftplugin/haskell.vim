@@ -23,6 +23,13 @@ let &makeprg = 'stack build --exec "hlint src"'
 
 " {{{ Assorted settings
 
+augroup Session
+	autocmd BufCreate *.hs mksession! .session.vim
+	autocmd BufDelete *.hs mksession! .session.vim
+	autocmd BufEnter *.hs mksession! .session.vim
+	autocmd VimLeavePre *.hs mksession! .session.vim
+augroup END
+
 setlocal textwidth=79
 setlocal smartindent
 setlocal autoindent
