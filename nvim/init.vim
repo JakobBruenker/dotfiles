@@ -109,6 +109,8 @@ call plug#end()
 
 " {{{ EASYMOTION
 
+let g:EasyMotion_startofline = 0
+let g:EasyMotion_smartcase = 1
 let g:EasyMotion_keys='aoeidtns''.pyfgcrlqjkxbmwvzuh:,'
 
 " }}}
@@ -251,29 +253,27 @@ nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
 nnoremap <silent> <Leader>tb :TagbarToggle<CR>
 
 map e <Plug>(easymotion-prefix)
-map j <Plug>(easymotion-j)
+map j <Plug>(easymotion-bd-jk)
 " temporarily disable movement key to get used to EasyMotion
 map l <nop>
 map h <nop>
-noremap ej j
-map k <Plug>(easymotion-k)
+map k <nop>
 map f <nop>
 map F <nop>
-map t <nop>
+map t <Plug>(easymotion-bd-t)
 map T <nop>
 map s <Plug>(easymotion-s)
 noremap es s
-map w <Plug>(easymotion-w)
-map W <Plug>(easymotion-W)
-map b <Plug>(easymotion-b)
-map B <Plug>(easymotion-B)
+map w <Plug>(easymotion-bd-w)
+map W <Plug>(easymotion-bd-W)
+map b <Plug>(easymotion-bd-e)
+map B <Plug>(easymotion-bd-E)
 map E <Plug>(easymotion-E)
 map ge <Plug>(easymotion-ge)
 map gE <Plug>(easymotion-gE)
 map / <Plug>(incsearch-easymotion-/)
 map ? <Plug>(incsearch-easymotion-?)
-
-let g:EasyMotion_smartcase = 1
+map en <Plug>(easymotion-bd-n)
 
 map <silent> <Leader><Leader>s :OverCommandLine<CR>%s/
 
