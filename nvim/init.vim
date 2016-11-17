@@ -343,6 +343,7 @@ nnoremap <silent> <Leader><Leader>q :q<CR>
 nnoremap <silent> <Leader><Leader>!q :q!<CR>
 nnoremap <silent> <Leader><Leader>d :bdelete<CR>
 nnoremap <silent> <Leader><Leader>!d :bdelete!<CR>
+nnoremap <silent> <Leader><Leader>x :x<CR>
 nnoremap <silent> <Leader><Leader>z :qa<CR>
 nnoremap <silent> <Leader><Leader>!z :qa!<CR>
 nnoremap <silent> <Leader><Leader>w :w<CR>

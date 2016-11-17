@@ -24,14 +24,14 @@ let &makeprg = 'stack build --exec "hlint src"'
 " {{{ Assorted settings
 
 augroup Session
-	autocmd BufCreate *.hs mksession! .session.vim
-	autocmd BufLeave *.hs mksession! .session.vim
-	autocmd BufEnter *.hs mksession! .session.vim
+	autocmd BufCreate * mksession! .session.vim
+	autocmd BufLeave * mksession! .session.vim
+	autocmd BufEnter * mksession! .session.vim
 	autocmd QuitPre * TagbarClose
 	autocmd QuitPre * NERDTreeClose
 	autocmd QuitPre * call QuickfixClose()
 	autocmd QuitPre * helpclose
-	autocmd VimLeavePre *.hs mksession! .session.vim
+	autocmd VimLeavePre * mksession! .session.vim
 augroup END
 
 setlocal textwidth=79

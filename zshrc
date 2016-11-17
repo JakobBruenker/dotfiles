@@ -44,6 +44,7 @@ setopt EXTENDED_GLOB
 alias vim='nvim'
 alias vi='vim'
 alias vis='vim -S .session.vim'
+alias vito='vim TODO.qt'
 alias v='vi'
 alias ..='cd ..'
 alias ...='cd ../..'
