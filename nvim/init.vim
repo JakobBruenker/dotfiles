@@ -39,9 +39,9 @@ set pastetoggle=<F10>
 
 let &fillchars = 'vert: ,fold:·'
 
-" Remember to hold Shift while selecting to get regular terminal mouse
-" selection back!
-set mouse=a
+" if mouse=a, remember to hold shift to get regular terminal copy
+" functionality back
+set mouse=r
 
 augroup SignCol
 	autocmd!
@@ -123,9 +123,9 @@ endfunction
 
 function! OpenTasksMapping()
 	if filereadable('TODO.qt')
-		return ":edit TODO.qt\<CR>"
+		return ":edit TODO.qt\<CR>gg/\\v^\\s+-\\s+\\zs\<CR>"
 	elseif bufnr('TODO.qt') != -1
-		return ':buffer ' . bufnr("TODO.qt") . "\<CR>"
+		return ':buffer ' . bufnr("TODO.qt") . "\<CR>gg/\\v^\\s+-\\s+\\zs\<CR>"
 	else
 		return ":call OpenNewTasks()\<CR>A"
 	endif
@@ -264,6 +264,33 @@ function! OpenLocalFold()
 	endif
 endfunction
 
+let s:termopen = 0
+
+function! OpenTerm()
+	let s:termopen = 1
+	let tname = bufname('term://')
+	if tname ==? ""
+		belowright 15split term://zsh
+		set nospell
+	else
+		execute 'belowright 15split ' . tname
+	endif
+	set nobuflisted
+endfunction
+
+function! NewTermStuff()
+	if s:termopen
+		return ""
+	else
+		return "cd " . getcwd() . "\<CR>"
+		let s:termopen = 1
+	endif
+endfunction
+
+nnoremap <silent> <expr> <Leader><Leader>g ":call OpenTerm()\<CR>A" . NewTermStuff()
+tnoremap <Leader><Leader>g <C-\><C-N>:q<CR>
+tnoremap <Esc>s <C-\><C-N>
+
 nnoremap <silent> <Leader><Leader><Leader>s :call OpenSession()<CR>
 
 nnoremap <Leader>q gwip
@@ -275,7 +302,9 @@ imap <expr> <Leader><CR> (pumvisible() ? "<C-Y>" : "") . '<Plug>snipMateNextOrTr
 
 vnoremap <Space> I<Space><Esc>gv
 map y <Plug>(operator-flashy)
+sunmap y
 map Y <Plug>(operator-flashy)$
+sunmap Y
 nnoremap :q<CR> :echo "Temporarily disabled"<CR>
 nnoremap :w<CR> :echo "Temporarily disabled"<CR>
 
@@ -287,19 +316,31 @@ nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
 nnoremap <silent> <Leader>tb :TagbarToggle<CR>
 
 map dn <Plug>Dsurround
+sunmap dn
 
 map e <Plug>(easymotion-prefix)
+sunmap e
 map s <Plug>(easymotion-bd-jk)
+sunmap s
 " temporarily disable movement key to get used to EasyMotion
 map l <nop>
+sunmap l
 map k <nop>
+sunmap k
 map j <nop>
+sunmap j
 map f <nop>
+sunmap f
 map F <nop>
+sunmap F
 map h <Plug>(easymotion-bd-t)
+sunmap h
 map T <nop>
+sunmap T
 map t <Plug>(easymotion-s)
+sunmap t
 map <silent> S <Plug>(easymotion-overwin-f)
+sunmap S
 
 noremap es s
 nmap w <Plug>(easymotion-bd-w)
@@ -307,15 +348,24 @@ vmap w <Plug>(easymotion-bd-w)
 nmap W <Plug>(easymotion-bd-W)
 vmap W <Plug>(easymotion-bd-W)
 map b <Plug>(easymotion-bd-e)
+sunmap b
 map B <Plug>(easymotion-bd-E)
+sunmap B
 map E <Plug>(easymotion-E)
+sunmap E
 map ge <Plug>(easymotion-ge)
+sunmap ge
 map gE <Plug>(easymotion-gE)
+sunmap gE
 map / <Plug>(incsearch-easymotion-/)
+sunmap /
 map ? <Plug>(incsearch-easymotion-?)
+sunmap ?
 map en <Plug>(easymotion-bd-n)
+sunmap en
 
 map <silent> <Leader><Leader>s :OverCommandLine<CR>%s/
+sunmap <Leader><Leader>s
 
 nnoremap <silent> <Leader>p :CtrlPMixed<CR>
 
@@ -337,7 +387,7 @@ nnoremap <Leader><Leader>c <C-t>
 nnoremap <Leader>l <C-U>
 nnoremap <Leader>s <C-D>
 nnoremap <silent> <Leader><Leader>f :set foldenable<CR>
-nnoremap <silent> <Leader><Leader>g :set nofoldenable<CR>
+nnoremap <silent> <Leader><Leader>y :set nofoldenable<CR>
 
 nnoremap <silent> <Leader><Leader>q :q<CR>
 nnoremap <silent> <Leader><Leader>!q :q!<CR>
@@ -403,6 +453,7 @@ highlight StatusLineNC cterm=NONE ctermbg=23
 highlight StatusLine cterm=NONE ctermfg=7 ctermbg=23
 highlight TagbarHighlight ctermfg=7 ctermbg=NONE
 highlight SpellBad ctermbg=NONE
+highlight SpellCap ctermbg=NONE
 highlight EasyMotionTarget2First ctermfg=1
 highlight EasyMotionTarget2Second ctermfg=5
 
