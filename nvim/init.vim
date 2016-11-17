@@ -140,7 +140,7 @@ let g:quicktask_snip_path = '~/.quicktaskSnips'
 
 let g:EasyMotion_startofline = 0
 let g:EasyMotion_smartcase = 1
-let g:EasyMotion_keys='aoeidtns''.pyfgcrlqjkxbmwvzu()}+{]/-h:,'
+let g:EasyMotion_keys='aoeidtns''.pyfgcrlqjkxbmwvzu()=*}+{][!&#/-h:,'
 augroup EasyMotion
 	" do this to avoid hit enter prompt on overwin commands
 	autocmd!
@@ -266,28 +266,44 @@ endfunction
 
 let s:termopen = 0
 
-function! OpenTerm()
-	let s:termopen = 1
+function! CloseTerm()
 	let tname = bufname('term://')
-	if tname ==? ""
-		belowright 15split term://zsh
-		set nospell
-	else
-		execute 'belowright 15split ' . tname
+	if tname !=? ""
+		execute 'buffer ' . tname
+		bdelete!
 	endif
-	set nobuflisted
+	let s:termopen = 0
+endfunction
+
+function! ToggleTerm()
+	if &filetype !=# 'terminal'
+		let s:termopen = 1
+		let tname = bufname('term://')
+		if tname ==? ""
+			belowright 15split term://zsh
+			set nospell
+			set filetype=terminal
+		else
+			execute 'belowright 15split ' . tname
+		endif
+		set nobuflisted
+	endif
 endfunction
 
 function! NewTermStuff()
-	if s:termopen
-		return ""
+	if &filetype !=# 'terminal'
+		if s:termopen
+			return "A"
+		else
+			return "Acd " . getcwd() . "\<CR>"
+			let s:termopen = 1
+		endif
 	else
-		return "cd " . getcwd() . "\<CR>"
-		let s:termopen = 1
+		return ":q\<CR>"
 	endif
 endfunction
 
-nnoremap <silent> <expr> <Leader><Leader>g ":call OpenTerm()\<CR>A" . NewTermStuff()
+nnoremap <silent> <expr> <Leader><Leader>g ":call ToggleTerm()\<CR>" . NewTermStuff()
 tnoremap <Leader><Leader>g <C-\><C-N>:q<CR>
 tnoremap <Esc>s <C-\><C-N>
 
@@ -364,7 +380,7 @@ sunmap ?
 map en <Plug>(easymotion-bd-n)
 sunmap en
 
-map <silent> <Leader><Leader>s :OverCommandLine<CR>%s/
+map <silent> <Leader><Leader>s :OverCommandLine<CR>%s/\v
 sunmap <Leader><Leader>s
 
 nnoremap <silent> <Leader>p :CtrlPMixed<CR>
