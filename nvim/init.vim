@@ -67,6 +67,7 @@ call plug#begin('~/.vim/plugged')
 
 " Make sure to use single quotes
 
+Plug 'aaronbieber/vim-quicktask'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'easymotion/vim-easymotion'
@@ -107,11 +108,44 @@ call plug#end()
 
 " }}}
 
+" {{{ QUICKTASK
+
+function! OpenNewTasks()
+	QTInit
+	if bufnr('#') != -1
+		let bfn = bufnr('%')
+		:quit
+		execute 'buffer ' . bfn
+	endif
+	normal! Gddddkk^wC
+	file TODO.qt
+endfunction
+
+function! OpenTasksMapping()
+	if filereadable('TODO.qt')
+		return ":edit TODO.qt\<CR>"
+	elseif bufnr('TODO.qt') != -1
+		return ':buffer ' . bufnr("TODO.qt") . "\<CR>"
+	else
+		return ":call OpenNewTasks()\<CR>A"
+	endif
+endfunction
+
+nnoremap <expr> <silent> <Leader><Leader>to OpenTasksMapping()
+let g:quicktask_snip_path = '~/.quicktaskSnips'
+
+" }}}
+
 " {{{ EASYMOTION
 
 let g:EasyMotion_startofline = 0
 let g:EasyMotion_smartcase = 1
-let g:EasyMotion_keys='aoeidtns''.pyfgcrlqjkxbmwvzuh:,'
+let g:EasyMotion_keys='aoeidtns''.pyfgcrlqjkxbmwvzu()}+{]/-h:,'
+augroup EasyMotion
+	" do this to avoid hit enter prompt on overwin commands
+	autocmd!
+	autocmd WinLeave * silent
+augroup END
 
 " }}}
 
@@ -252,20 +286,26 @@ nnoremap <silent> <Leader>j :cprevious<CR>:call CheckFold()<CR>
 nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
 nnoremap <silent> <Leader>tb :TagbarToggle<CR>
 
+map dn <Plug>Dsurround
+
 map e <Plug>(easymotion-prefix)
-map j <Plug>(easymotion-bd-jk)
+map s <Plug>(easymotion-bd-jk)
 " temporarily disable movement key to get used to EasyMotion
 map l <nop>
-map h <nop>
 map k <nop>
+map j <nop>
 map f <nop>
 map F <nop>
-map t <Plug>(easymotion-bd-t)
+map h <Plug>(easymotion-bd-t)
 map T <nop>
-map s <Plug>(easymotion-s)
+map t <Plug>(easymotion-s)
+map <silent> S <Plug>(easymotion-overwin-f)
+
 noremap es s
-map w <Plug>(easymotion-bd-w)
-map W <Plug>(easymotion-bd-W)
+nmap w <Plug>(easymotion-bd-w)
+vmap w <Plug>(easymotion-bd-w)
+nmap W <Plug>(easymotion-bd-W)
+vmap W <Plug>(easymotion-bd-W)
 map b <Plug>(easymotion-bd-e)
 map B <Plug>(easymotion-bd-E)
 map E <Plug>(easymotion-E)
@@ -288,7 +328,7 @@ nnoremap <Leader>wm <C-W>h
 nnoremap <Leader>wn <C-W>l
 
 " split up so that this doesn't activate the mapping itself
-nnoremap <silent> <expr> <Leader>td '/\vTO' . 'DO\|FI' . 'XME\|X' . "XX\<CR>:call CheckFold()\<CR>"
+nnoremap <silent> <expr> <Leader><Leader>td '/\vTO' . 'DO\|FI' . 'XME\|X' . "XX\<CR>:call CheckFold()\<CR>"
 
 nnoremap <Leader>o <C-O>
 nnoremap <Leader>i <C-I>
@@ -299,6 +339,8 @@ nnoremap <Leader>s <C-D>
 nnoremap <silent> <Leader><Leader>f :set foldenable<CR>
 nnoremap <silent> <Leader><Leader>g :set nofoldenable<CR>
 
+nnoremap <silent> <Leader><Leader>q :q<CR>
+nnoremap <silent> <Leader><Leader>!q :q!<CR>
 nnoremap <silent> <Leader><Leader>d :bdelete<CR>
 nnoremap <silent> <Leader><Leader>!d :bdelete!<CR>
 nnoremap <silent> <Leader><Leader>z :qa<CR>
@@ -334,7 +376,7 @@ inoremap <expr> <CR> (pumvisible() ? "<C-Y>" : "") . <SID>NextOrNewLine()
 
 inoremap <expr> <TAB> (pumvisible() ? "<C-N>" : "<TAB>")
 inoremap <S-TAB> <C-P>
-nnoremap <expr> <CR> <SID>NextOrNewLineNormal()
+nnoremap <expr> <Leader><CR> <SID>NextOrNewLineNormal()
 
 inoremap <Leader>f <C-X><C-F>
 
@@ -360,6 +402,8 @@ highlight StatusLineNC cterm=NONE ctermbg=23
 highlight StatusLine cterm=NONE ctermfg=7 ctermbg=23
 highlight TagbarHighlight ctermfg=7 ctermbg=NONE
 highlight SpellBad ctermbg=NONE
+highlight EasyMotionTarget2First ctermfg=1
+highlight EasyMotionTarget2Second ctermfg=5
 
 augroup Highlighting
 	autocmd!

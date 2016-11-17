@@ -1,0 +1,10 @@
+# Quicktask v1.4
+
+CURRENT TASKS:
+  Vim:
+    - Maybe add syntax highlighting to Quickfix window
+      @ Added [Thu 2016-11-17]
+    - Make it possible to open a terminal, ideally while keeping it out of the
+      buffer list
+      @ Added [Thu 2016-11-17]
+COMPLETED TASKS:

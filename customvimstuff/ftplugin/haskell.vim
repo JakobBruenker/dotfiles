@@ -30,6 +30,7 @@ augroup Session
 	autocmd QuitPre * TagbarClose
 	autocmd QuitPre * NERDTreeClose
 	autocmd QuitPre * call QuickfixClose()
+	autocmd QuitPre * helpclose
 	autocmd VimLeavePre *.hs mksession! .session.vim
 augroup END
 
