@@ -14,6 +14,7 @@ set completeopt=longest,menuone,preview
 set virtualedit=block
 
 " Display all matching files when tab completing
+set wildignore+=tags
 set wildmenu
 set wildmode=longest:full
 
@@ -77,7 +78,6 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/vim-easyoperator-line'
 Plug 'haya14busa/vim-easyoperator-phrase'
 Plug 'haya14busa/vim-operator-flashy'
-Plug 'itchyny/vim-haskell-indent'
 Plug 'junegunn/vim-easy-align'
 Plug 'kana/vim-operator-user'
 Plug 'majutsushi/tagbar'
@@ -101,6 +101,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
 Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
 Plug 'Twinside/vim-haskellFold', { 'for': 'haskell' }
+Plug 'itchyny/vim-haskell-indent', { 'for': 'haskell' }
 
 Plug '~/dotfiles/customvimstuff'
 
@@ -233,7 +234,18 @@ function! QuickfixToggle()
 		wincmd k
 		let s:qfopen = 1
 	endif
+	call ResizeTerm()
 endfunction
+
+function! ResizeTerm()
+	let pwnr = bufwinnr(bufnr('%'))
+	let wnr = bufwinnr(bufnr('term://'))
+	if wnr !=# -1
+		execute wnr . 'wincmd w'
+		resize 15
+		execute pwnr . 'wincmd w'
+	endif
+endfunction!
 
 function! QuickfixOpen()
 	if !s:qfopen
@@ -276,17 +288,23 @@ function! CloseTerm()
 endfunction
 
 function! ToggleTerm()
-	if &filetype !=# 'terminal'
-		let s:termopen = 1
-		let tname = bufname('term://')
-		if tname ==? ""
-			belowright 15split term://zsh
-			set nospell
-			set filetype=terminal
-		else
-			execute 'belowright 15split ' . tname
+	call QuickfixClose()
+	let wnr = bufwinnr(bufnr('term://'))
+	if wnr !=# -1
+		execute wnr . 'wincmd w'
+	else
+		if &filetype !=# 'terminal'
+			let s:termopen = 1
+			let tname = bufname('term://')
+			if tname ==? ""
+				belowright 15split term://zsh
+				set nospell
+				set filetype=terminal
+			else
+				execute 'belowright 15split ' . tname
+			endif
+			set nobuflisted
 		endif
-		set nobuflisted
 	endif
 endfunction
 
@@ -305,6 +323,7 @@ endfunction
 
 nnoremap <silent> <expr> <Leader><Leader>g ":call ToggleTerm()\<CR>" . NewTermStuff()
 tnoremap <Leader><Leader>g <C-\><C-N>:q<CR>
+tnoremap <Leader><Leader>c <C-\><C-N><C-W>k
 tnoremap <Esc>s <C-\><C-N>
 
 nnoremap <silent> <Leader><Leader><Leader>s :call OpenSession()<CR>
@@ -329,54 +348,35 @@ nnoremap <silent> <Leader>n :cnext<CR>:call CheckFold()<CR>
 nnoremap <silent> <Leader>r :cc<CR>:call CheckFold()<CR>
 nnoremap <silent> <Leader>j :cprevious<CR>:call CheckFold()<CR>
 nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
-nnoremap <silent> <Leader>tb :TagbarToggle<CR>
+nnoremap <silent> <Leader>tb :TagbarToggle<CR>:call ResizeTerm()<CR>
 
 map dn <Plug>Dsurround
 sunmap dn
+nnoremap dl dd
 
 map e <Plug>(easymotion-prefix)
 sunmap e
 map s <Plug>(easymotion-bd-jk)
 sunmap s
 " temporarily disable movement key to get used to EasyMotion
-map l <nop>
-sunmap l
-map k <nop>
-sunmap k
-map j <nop>
-sunmap j
 map f <nop>
 sunmap f
 map F <nop>
 sunmap F
-map h <Plug>(easymotion-bd-t)
-sunmap h
-map T <nop>
-sunmap T
 map t <Plug>(easymotion-s)
 sunmap t
-map <silent> S <Plug>(easymotion-overwin-f)
-sunmap S
+map <silent> T <Plug>(easymotion-overwin-f)
+sunmap T
 
 noremap es s
-nmap w <Plug>(easymotion-bd-w)
-vmap w <Plug>(easymotion-bd-w)
-nmap W <Plug>(easymotion-bd-W)
-vmap W <Plug>(easymotion-bd-W)
-map b <Plug>(easymotion-bd-e)
-sunmap b
-map B <Plug>(easymotion-bd-E)
-sunmap B
-map E <Plug>(easymotion-E)
-sunmap E
 map ge <Plug>(easymotion-ge)
 sunmap ge
 map gE <Plug>(easymotion-gE)
 sunmap gE
-map / <Plug>(incsearch-easymotion-/)
-sunmap /
-map ? <Plug>(incsearch-easymotion-?)
-sunmap ?
+map e/ <Plug>(incsearch-easymotion-/)
+sunmap e/
+map e? <Plug>(incsearch-easymotion-?)
+sunmap e?
 map en <Plug>(easymotion-bd-n)
 sunmap en
 
@@ -392,6 +392,8 @@ nnoremap <C-W>_ <C-W>-
 nnoremap <C-W>- <C-W>_
 nnoremap <Leader>wm <C-W>h
 nnoremap <Leader>wn <C-W>l
+nnoremap <Leader>wk <C-W>k
+nnoremap <Leader>wj <C-W>j
 
 " split up so that this doesn't activate the mapping itself
 nnoremap <silent> <expr> <Leader><Leader>td '/\vTO' . 'DO\|FI' . 'XME\|X' . "XX\<CR>:call CheckFold()\<CR>"
@@ -400,8 +402,8 @@ nnoremap <Leader>o <C-O>
 nnoremap <Leader>i <C-I>
 nnoremap <Leader><Leader>t <C-]>
 nnoremap <Leader><Leader>c <C-t>
-nnoremap <Leader>l <C-U>
-nnoremap <Leader>s <C-D>
+nnoremap <Leader>/ <C-U>
+nnoremap <Leader>l <C-D>
 nnoremap <silent> <Leader><Leader>f :set foldenable<CR>
 nnoremap <silent> <Leader><Leader>y :set nofoldenable<CR>
 
