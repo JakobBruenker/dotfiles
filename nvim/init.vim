@@ -50,6 +50,9 @@ augroup SignCol
 	autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
 augroup END
 
+" because vim recognizes an empty .tex as plaintex
+let g:tex_flavor = 'latex'
+
 " }}}
 
 " {{{ VIMRC HELPERS
@@ -80,6 +83,7 @@ Plug 'haya14busa/vim-easyoperator-phrase'
 Plug 'haya14busa/vim-operator-flashy'
 Plug 'junegunn/vim-easy-align'
 Plug 'kana/vim-operator-user'
+Plug 'lervag/vimtex'
 Plug 'majutsushi/tagbar'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'mkitt/tabline.vim'
@@ -132,7 +136,7 @@ function! OpenTasksMapping()
 	endif
 endfunction
 
-nnoremap <expr> <silent> <Leader><Leader>to OpenTasksMapping()
+nnoremap <expr> <silent> <Leader><Leader><Leader>to OpenTasksMapping()
 let g:quicktask_snip_path = '~/.quicktaskSnips'
 
 " }}}
@@ -242,7 +246,7 @@ function! ResizeTerm()
 	let wnr = bufwinnr(bufnr('term://'))
 	if wnr !=# -1
 		execute wnr . 'wincmd w'
-		resize 15
+		resize 30
 		execute pwnr . 'wincmd w'
 	endif
 endfunction!
@@ -297,11 +301,11 @@ function! ToggleTerm()
 			let s:termopen = 1
 			let tname = bufname('term://')
 			if tname ==? ""
-				belowright 15split term://zsh
+				belowright 30split term://zsh
 				set nospell
 				set filetype=terminal
 			else
-				execute 'belowright 15split ' . tname
+				execute 'belowright 30split ' . tname
 			endif
 			set nobuflisted
 		endif
@@ -347,12 +351,13 @@ nnoremap <silent> Q :call QuickfixToggle()<CR>
 nnoremap <silent> <Leader>n :cnext<CR>:call CheckFold()<CR>
 nnoremap <silent> <Leader>r :cc<CR>:call CheckFold()<CR>
 nnoremap <silent> <Leader>j :cprevious<CR>:call CheckFold()<CR>
+nnoremap <silent> <Leader>ln :lnext<CR>:call CheckFold()<CR>
+nnoremap <silent> <Leader>lr :ll<CR>:call CheckFold()<CR>
+nnoremap <silent> <Leader>lj :lprevious<CR>:call CheckFold()<CR>
 nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
 nnoremap <silent> <Leader>tb :TagbarToggle<CR>:call ResizeTerm()<CR>
 
-map dn <Plug>Dsurround
-sunmap dn
-nnoremap dl dd
+map <Leader>ds <Plug>Dsurround
 
 map e <Plug>(easymotion-prefix)
 sunmap e
@@ -396,14 +401,14 @@ nnoremap <Leader>wk <C-W>k
 nnoremap <Leader>wj <C-W>j
 
 " split up so that this doesn't activate the mapping itself
-nnoremap <silent> <expr> <Leader><Leader>td '/\vTO' . 'DO\|FI' . 'XME\|X' . "XX\<CR>:call CheckFold()\<CR>"
+nnoremap <silent> <expr> <Leader><Leader><Leader>td '/\vTO' . 'DO\|FI' . 'XME\|X' . "XX\<CR>:call CheckFold()\<CR>"
 
 nnoremap <Leader>o <C-O>
 nnoremap <Leader>i <C-I>
 nnoremap <Leader><Leader>t <C-]>
 nnoremap <Leader><Leader>c <C-t>
 nnoremap <Leader>/ <C-U>
-nnoremap <Leader>l <C-D>
+nnoremap <Leader>- <C-D>
 nnoremap <silent> <Leader><Leader>f :set foldenable<CR>
 nnoremap <silent> <Leader><Leader>y :set nofoldenable<CR>
 
@@ -434,7 +439,7 @@ nmap ga <Plug>(EasyAlign)
 noremap g: g;
 
 function! s:NextOrNewLine()
-	return (col('.') >= col('$') && getline(line('.') + 1) =~? '\v\s+$') ? "\<Esc>jA" : "\<CR>"
+	return (getline(line('.') + 1) =~? '\v\s+$') ? "\<Esc>jA" : "\<CR>"
 endfunction
 
 function! s:NextOrNewLineNormal()
@@ -474,6 +479,8 @@ highlight SpellBad ctermbg=NONE
 highlight SpellCap ctermbg=NONE
 highlight EasyMotionTarget2First ctermfg=1
 highlight EasyMotionTarget2Second ctermfg=5
+highlight SpellRare cterm=NONE ctermbg=NONE
+highlight MatchParen ctermbg=0
 
 augroup Highlighting
 	autocmd!

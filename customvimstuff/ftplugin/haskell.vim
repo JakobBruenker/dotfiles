@@ -10,11 +10,11 @@ let g:necoghc_enable_detailed_browse = 1
 " {{{ neomake
 
 augroup Neomake
-	autocmd!
-	autocmd BufWritePost *.hs call QuickfixOpen()
-	autocmd BufWritePost *.hs Neomake!
-	autocmd BufWritePost *.hs call jobstart(['bash', '-O', 'globstar', '-c', 'hothasktags ./**/*.hs > tags'])
-	autocmd BufWritePost *.hs AirlineRefresh
+    autocmd!
+    autocmd BufWritePost *.hs call QuickfixOpen()
+    autocmd BufWritePost *.hs Neomake!
+    autocmd BufWritePost *.hs call jobstart(['bash', '-O', 'globstar', '-c', 'hothasktags ./**/*.hs > tags'])
+    autocmd BufWritePost *.hs AirlineRefresh
 augroup END
 
 let &makeprg = 'stack build --exec "hlint src"'
@@ -25,14 +25,14 @@ let &makeprg = 'stack build --exec "hlint src"'
 
 " I'm not actually using the session, it seems
 " augroup Session
-" 	autocmd BufCreate * mksession! .session.vim
-" 	autocmd BufLeave * mksession! .session.vim
-" 	autocmd BufEnter * mksession! .session.vim
-" 	autocmd QuitPre * TagbarClose
-" 	autocmd QuitPre * NERDTreeClose
-" 	autocmd QuitPre * call QuickfixClose()
-" 	autocmd QuitPre * helpclose
-" 	autocmd VimLeavePre * mksession! .session.vim
+"     autocmd BufCreate * mksession! .session.vim
+"     autocmd BufLeave * mksession! .session.vim
+"     autocmd BufEnter * mksession! .session.vim
+"     autocmd QuitPre * TagbarClose
+"     autocmd QuitPre * NERDTreeClose
+"     autocmd QuitPre * call QuickfixClose()
+"     autocmd QuitPre * helpclose
+"     autocmd VimLeavePre * mksession! .session.vim
 " augroup END
 
 setlocal textwidth=79
@@ -51,6 +51,7 @@ vnoremap ,s. :EasyAlign<CR><C-X>-><CR>
 
 inoremap <LocalLeader>: <ESC>yypA<Space><ESC>kA<Space>::<Space>
 inoremap -. <Space>-><Space>
+inoremap ,- <Space><-<Space>
 inoremap :: <Space>::<Space>
 
 " }}}

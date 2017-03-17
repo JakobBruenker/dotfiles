@@ -1,3 +1,3 @@
-set expandtab
-set shiftwidth=2
-set autoindent
+setlocal expandtab
+setlocal shiftwidth=2
+setlocal autoindent
