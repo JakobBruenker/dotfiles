@@ -9,10 +9,16 @@ let g:necoghc_enable_detailed_browse = 1
 
 " {{{ neomake
 
+function! HsMake()
+    call QuickfixOpen()
+    Neomake!
+endfunction
+
+nnoremap <silent> <localleader><localleader>m :w<CR>:call HsMake()<CR>
+inoremap <silent> <localleader><localleader>m <ESC>:w<CR>:call HsMake()<CR>
+
 augroup Neomake
     autocmd!
-    autocmd BufWritePost *.hs call QuickfixOpen()
-    autocmd BufWritePost *.hs Neomake!
     autocmd BufWritePost *.hs call jobstart(['bash', '-O', 'globstar', '-c', 'hothasktags ./**/*.hs > tags'])
     autocmd BufWritePost *.hs AirlineRefresh
 augroup END
@@ -51,7 +57,7 @@ vnoremap ,s. :EasyAlign<CR><C-X>-><CR>
 
 inoremap <LocalLeader>: <ESC>yypA<Space><ESC>kA<Space>::<Space>
 inoremap -. <Space>-><Space>
-inoremap ,- <Space><-<Space>
+inoremap -, <Space><-<Space>
 inoremap :: <Space>::<Space>
 
 " }}}

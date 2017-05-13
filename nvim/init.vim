@@ -344,8 +344,6 @@ map y <Plug>(operator-flashy)
 sunmap y
 map Y <Plug>(operator-flashy)$
 sunmap Y
-nnoremap :q<CR> :echo "Temporarily disabled"<CR>
-nnoremap :w<CR> :echo "Temporarily disabled"<CR>
 
 nnoremap <silent> Q :call QuickfixToggle()<CR>
 nnoremap <silent> <Leader>n :cnext<CR>:call CheckFold()<CR>
@@ -363,11 +361,6 @@ map e <Plug>(easymotion-prefix)
 sunmap e
 map s <Plug>(easymotion-bd-jk)
 sunmap s
-" temporarily disable movement key to get used to EasyMotion
-map f <nop>
-sunmap f
-map F <nop>
-sunmap F
 map t <Plug>(easymotion-s)
 sunmap t
 map <silent> T <Plug>(easymotion-overwin-f)
@@ -423,8 +416,7 @@ nnoremap <silent> <Leader><Leader>w :w<CR>
 inoremap <silent> <Leader><Leader>w <Esc>:w<CR>
 nnoremap <silent> <Leader><Leader>!w :wa<CR>:echom "All files written"<CR>
 
-nnoremap p p=']<C-O>
-nnoremap P P=']<C-O>
+nnoremap <leader>P P=']<C-O>
 
 noremap <Leader>+ ;
 noremap <Leader>] ,
