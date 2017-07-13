@@ -1,3 +1,12 @@
+" {{{ ghcid
+
+let g:ghcid_command = ["ghcid", "--test=:!hlint ."]
+
+nnoremap <silent> <localleader><localleader>m :w<CR>:Ghcid<CR>
+" inoremap <silent> <localleader><localleader>m <ESC>:w<CR>:Ghcid<CR>
+
+" }}}
+
 " {{{ necoghc
 
 " Disable haskell-vim omnifunc
@@ -14,8 +23,8 @@ function! HsMake()
     Neomake!
 endfunction
 
-nnoremap <silent> <localleader><localleader>m :w<CR>:call HsMake()<CR>
-inoremap <silent> <localleader><localleader>m <ESC>:w<CR>:call HsMake()<CR>
+" nnoremap <silent> <localleader><localleader>m :w<CR>:call HsMake()<CR>
+" inoremap <silent> <localleader><localleader>m <ESC>:w<CR>:call HsMake()<CR>
 
 augroup Neomake
     autocmd!
