@@ -78,5 +78,7 @@ highlight hs_DeclareFunction ctermfg=2
 highlight hsDelimiter ctermfg=1
 highlight hsCharacter ctermfg=6 cterm=italic
 highlight QuickFixLine ctermbg=NONE ctermfg=7
+highlight ErrorSign ctermfg=1
+highlight WarningSign ctermfg=1
 
 " }}}

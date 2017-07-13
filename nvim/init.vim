@@ -106,6 +106,7 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
 Plug 'Twinside/vim-haskellFold', { 'for': 'haskell' }
 Plug 'itchyny/vim-haskell-indent', { 'for': 'haskell' }
+Plug 'ndmitchell/ghcid', { 'rtp': 'plugins/nvim', 'for': 'haskell'}
 
 Plug '~/dotfiles/customvimstuff'
 
