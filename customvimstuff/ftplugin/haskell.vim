@@ -1,3 +1,5 @@
+set iskeyword+=.,39
+
 " {{{ ghcid
 
 let g:ghcid_command = ["ghcid", "--test=:!hlint ."]

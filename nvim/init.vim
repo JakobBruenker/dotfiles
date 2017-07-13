@@ -468,6 +468,7 @@ highlight VertSplit cterm=NONE ctermbg=23
 highlight StatusLineNC cterm=NONE ctermbg=23
 highlight StatusLine cterm=NONE ctermfg=7 ctermbg=23
 highlight TagbarHighlight ctermfg=7 ctermbg=NONE
+highlight TagbarSignature ctermfg=13
 highlight SpellBad ctermbg=NONE
 highlight SpellCap ctermbg=NONE
 highlight EasyMotionTarget2First ctermfg=1
