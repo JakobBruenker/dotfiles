@@ -35,7 +35,7 @@ pacstrap /mnt base &&
 genfstab -U /mnt >> /mnt/etc/fstab &&
 
 cd /mnt/ &&
-wget https://github.com/JakobBruenker/dotfiles/master/scripts/newroot.sh &&
+wget https://raw.githubusercontent.com/JakobBruenker/dotfiles/master/scripts/newroot.sh &&
 chmod +x newroot.sh.zsh &&
 
 # change root
