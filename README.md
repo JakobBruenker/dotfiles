@@ -14,5 +14,5 @@ First, get the repository, and then, run the setup script:
 ```bash
 $ git clone https://github.com/JakobBruenker/dotfiles.git
 $ cd dotfiles
-$ ./setup.sh
+$ scripts/setup.sh
 ```
