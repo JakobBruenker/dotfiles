@@ -53,6 +53,8 @@ grub-mkconfig -o /boot/grub/grub.cfg &&
 
 # install git because we'll need it later
 pacman -S --noconfirm git &&
+cd /home/$username
+git clone https://github.com/jakobbruenker/dotfiles.git
 
 # uncomment the line that says
 # %wheel ALL=(ALL) ALL
