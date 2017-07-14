@@ -23,7 +23,7 @@ ln -sf $PWD/zprofile ~/.zprofile &&
 ln -sf $PWD/zshrc ~/.zshrc &&
 
 # required for compilation
-sudo pacman -S --noconfirm gcc make fakeroot &&
+sudo pacman -S --noconfirm gcc make fakeroot linux-headers &&
 
 # install yaourt
 sudo pacman -S --noconfirm binutils pkg-config &&
@@ -51,6 +51,7 @@ sudo ln -sf $PWD/xorg.conf.d /etc/X11/xorg.conf.d &&
 sudo pacman -S --noconfirm wmname unclutter feh xcompmgr &&
 
 # custom dwm
+sudo pacman -S --noconfirm libxft &&
 cd ../aur &&
 git clone https://github.com/JakobBruenker/dwm.git &&
 cd dwm &&
