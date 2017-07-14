@@ -1,3 +1,4 @@
+" the period is for hothasktags
 set iskeyword+=.,39
 
 " {{{ ghcid

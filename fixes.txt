@@ -1,3 +1,4 @@
 - ghc-mod used to fail with cabal-helper-wrapper throwing a segfault, if used
   in a stack directory. The solution was to delete ~/.ghc-mod, which contained
   an old version of cabal helper or something.
+- the fix to urxvt not displaying w3m preview images correctly is to not use an xft font
