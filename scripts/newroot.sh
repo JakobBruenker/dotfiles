@@ -36,7 +36,7 @@ echo PLEASE ENTER ROOT PASSWORD &&
 passwd &&
 
 # install sudo
-pacman -S sudo &&
+pacman -S --noconfirm sudo &&
 
 # set up new user
 useradd -m -G wheel $username &&
@@ -47,12 +47,12 @@ echo PLEASE ENTER PASSWORD FOR $username &&
 passwd $username &&
 
 # boot loader
-pacman -S grub os-prober &&
+pacman -S --noconfirm grub os-prober &&
 grub-install --recheck /dev/sda &&
 grub-mkconfig -o /boot/grub/grub.cfg &&
 
 # install git because we'll need it later
-pacman -S git &&
+pacman -S --noconfirm git &&
 
 # uncomment the line that says
 # %wheel ALL=(ALL) ALL
