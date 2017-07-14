@@ -6,7 +6,7 @@
 sudo pacman -Syyu --noconfirm &&
 
 # create links to all config files
-# mkdir -p ~/.local/share/stack
+mkdir -p ~/.local/share/stack
 mkdir -p ~/.config &&
 ln -sf $PWD/ghc ~/.ghc &&
 ln -sf $PWD/konsole ~/.config/ &&
@@ -39,15 +39,11 @@ makepkg -si --noconfirm &&
 cd ../../dotfiles &&
 
 # vm stuff
-sudo pacman -S --noconfirm linux-headers &&
-sudo pacman -S --noconfirm dkms &&
-sudo pacman -S --noconfirm virtualbox-guest-dkms &&
-sudo modprobe -a vboxguest &&
-sudo modprobe -a vboxsf &&
-sudo modprobe -a vboxvideo &&
+sudo pacman -S --noconfirm virtualbox-guest-utils &&
+sudo pacman -S --noconfirm virtualbox-guest-modules-arch &&
 
 # install xorg stuff
-sudo pacman -S --noconfirm xorg-server xorg-apps xorg-xinit xterm &&
+sudo pacman -S --noconfirm xorg-server xorg-xinit &&
 sudo mkdir -p /etc/X11 &&
 sudo ln -sf $PWD/xorg.conf.d /etc/X11/xorg.conf.d &&
 

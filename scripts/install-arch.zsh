@@ -39,7 +39,6 @@ wget https://raw.githubusercontent.com/JakobBruenker/dotfiles/master/scripts/new
 chmod +x newroot.sh &&
 
 # change root
-echo 'PLEASE MAKE SURE THE VARIABLES IN ./newroot.sh ARE SET CORRECTLY' &&
-echo 'AND THEN RUN IT AFTER PRESSING ENTER (PRESS ENTER NOW)' &&
-read &&
-exec arch-chroot /mnt &
+echo 'The intial installation is complete. Please run "arch-chroot /mnt" and' &&
+echo 'make sure that the variables in ./newroot.sh are set correctly.' &&
+echo 'After you''re done, please run it.'
