@@ -1,12 +1,12 @@
 # download this script and run it
+# but check whether you need the VM stuff
+# (search for vm stuff)
 
 # make sure everything is up to date
 sudo pacman -Syyu --noconfirm
 
 # create links to all config files
 mkdir -p ~/.local/share/stack
-sudo mkdir -p /etc/X11
-sudo ln -sf $PWD/xorg.conf.d /etc/X11/xorg.conf.d
 ln -sf $PWD/ghc ~/.ghc
 ln -sf $PWD/konsole ~/.local/share/konsole
 ln -sf $PWD/nvim ~/.local/share/nvim
@@ -37,8 +37,28 @@ cd yaourt
 makepkg -si --noconfirm
 cd ../..
 
+# vm stuff
+sudo pacman -S --noconfirm linux-headers
+sudo pacman -S --noconfirm dkms
+sudo pacman -S --noconfirm virtualbox-guest-dkms
+sudo modprobe -a vboxguest
+sudo modprobe -a vboxsf
+sudo modprobe -a vboxvideo
+
 # install xorg stuff
-sudo pacman -S --noconfirm 
+sudo pacman -S --noconfirm xorg-server xorg-apps xorg-xinit xterm
+sudo mkdir -p /etc/X11
+sudo ln -sf $PWD/xorg.conf.d /etc/X11/xorg.conf.d
+
+# various programs that are started by startx
+sudo pacman -S --noconfirm wmname unclutter feh xcompmgr
+
+# custom dwm
+cd aur
+git clone https://github.com/JakobBruenker/dwm.git
+cd dwm
+sudo make clean install
+cd ../..
 
 # set up zsh
 # unfortunately, you will have to select the right prezto package
