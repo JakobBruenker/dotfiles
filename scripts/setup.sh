@@ -6,10 +6,11 @@
 sudo pacman -Syyu --noconfirm
 
 # create links to all config files
-mkdir -p ~/.local/share/stack
+# mkdir -p ~/.local/share/stack
+mkdir -p ~/.config
 ln -sf $PWD/ghc ~/.ghc
-ln -sf $PWD/konsole ~/.local/share/konsole
-ln -sf $PWD/nvim ~/.local/share/nvim
+ln -sf $PWD/konsole ~/.config/
+ln -sf $PWD/nvim ~/.config/
 ln -sf $PWD/stack/config.yaml ~/.local/share/stack/config.yaml
 ln -sf $PWD/haskeline ~/.haskeline
 ln -sf $PWD/latexmkrc ~/.latexmkrc
@@ -26,8 +27,8 @@ sudo pacman -S --noconfirm gcc make fakeroot
 
 # install yaourt
 sudo pacman -S --noconfirm binutils pkg-config
-mkdir aur
-cd aur
+mkdir ../aur
+cd ../aur
 git clone https://aur.archlinux.org/package-query.git
 cd package-query
 makepkg -si --noconfirm
@@ -35,7 +36,7 @@ cd ..
 git clone https://aur.archlinux.org/yaourt.git
 cd yaourt
 makepkg -si --noconfirm
-cd ../..
+cd ../../dotfiles
 
 # vm stuff
 sudo pacman -S --noconfirm linux-headers
@@ -54,11 +55,12 @@ sudo ln -sf $PWD/xorg.conf.d /etc/X11/xorg.conf.d
 sudo pacman -S --noconfirm wmname unclutter feh xcompmgr
 
 # custom dwm
-cd aur
+cd ../aur
 git clone https://github.com/JakobBruenker/dwm.git
 cd dwm
 sudo make clean install
-cd ../..
+cd ../../dotfiles
+sudo ln -sf /usr/local/bin/dwm /bin/dwm
 
 # set up zsh
 # unfortunately, you will have to select the right prezto package
@@ -66,3 +68,28 @@ cd ../..
 sudo pacman -S --noconfirm zsh
 yaourt prezto-git --noconfirm
 chsh -s /bin/zsh
+
+# dmenu
+cd ../aur
+git clone https://aur.archlinux.org/dmenu-git.git
+cd dmenu-git
+makepkg -si --noconfirm
+cd ../../dotfiles
+ln -sf $PWD/dmenu/config.h ~/aur/dmenu-git/src/dmenu/config.h
+cd ../aur/dmenu-git
+makepkg -efi --noconfirm
+cd ../../dotfiles
+
+# konsole
+# you will need to select the correct fira font
+sudo pacman -S --noconfirm konsole
+yaourt fira-code-git
+
+# install other programs
+sudo pacman -S --noconfirm archlinux-keyring python-pip xclip
+sudo pacman -S --noconfirm wget firefox htop mlocate
+
+# vim
+sudo pacman -S --noconfirm neovim
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+pip install neovim
