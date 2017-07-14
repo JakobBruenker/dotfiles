@@ -34,6 +34,10 @@ pacstrap /mnt base &&
 # generate /etc/fstab
 genfstab -U /mnt >> /mnt/etc/fstab &&
 
+cd /mnt/ &&
+wget https://github.com/JakobBruenker/dotfiles/master/scripts/newroot.sh &&
+chmod +x newroot.sh.zsh &&
+
 # change root
 echo 'PLEASE MAKE SURE THE VARIABLES IN ./newroot.sh ARE SET CORRECTLY' &&
 echo 'AND THEN RUN IT AFTER PRESSING ENTER (PRESS ENTER NOW)' &&

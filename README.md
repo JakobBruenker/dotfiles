@@ -7,9 +7,15 @@ it's highly customized for what I personally want.
 Installation
 ------------
 
-If you need to install Arch, [this script](scripts/install-arch.zsh) can help.
+If you need to install Arch, run
 
-First, get the repository, and then, run the setup script:
+```bash
+wget https://github.com/JakobBruenker/dotfiles/master/scripts/install-arch.zsh
+chmod +x install-arch.zsh
+./install-arch.zsh
+```
+
+If you already have arch, get the repository, and then run the setup script:
 
 ```bash
 $ git clone https://github.com/JakobBruenker/dotfiles.git
