@@ -4,16 +4,17 @@
 sudo pacman -Syyu
 
 # create links to all config files
-ln -sf ghc ~/.ghc
-ln -sf konsole ~/.local/share/konsole
-ln -sf nvim ~/.local/share/nvim
-ln -sf stack/config.yaml ~/.local/share/stack/config.yaml
-ln -sf haskeline ~/.haskeline
-ln -sf latexmkrc ~/.latexmkrc
-ln -sf vimperatorrc ~/.vimperatorrc
-ln -sf xinitrc ~/.xinitrc
-ln -sf Xmodmap ~/.Xmodmap
-ln -sf Xresources ~/.Xresources
-ln -sf zpreztorc ~/.zpreztorc
-ln -sf zprofile ~/.zprofile
-ln -sf zshrc ~/.zshrc
+mkdir -p ~/.local/share/stack
+ln -sf $PWD/ghc ~/.ghc
+ln -sf $PWD/konsole ~/.local/share/konsole
+ln -sf $PWD/nvim ~/.local/share/nvim
+ln -sf $PWD/stack/config.yaml ~/.local/share/stack/config.yaml
+ln -sf $PWD/haskeline ~/.haskeline
+ln -sf $PWD/latexmkrc ~/.latexmkrc
+ln -sf $PWD/vimperatorrc ~/.vimperatorrc
+ln -sf $PWD/xinitrc ~/.xinitrc
+ln -sf $PWD/Xmodmap ~/.Xmodmap
+ln -sf $PWD/Xresources ~/.Xresources
+ln -sf $PWD/zpreztorc ~/.zpreztorc
+ln -sf $PWD/zprofile ~/.zprofile
+ln -sf $PWD/zshrc ~/.zshrc
