@@ -7,11 +7,11 @@ CursorShape=0
 
 [General]
 Name=Profile1
-Parent=FALLBACK/
+Parent=/home/user/.local/share/konsole/Profile1.profile
 ShowTerminalSizeHint=false
 
 [Scrolling]
 ScrollBarPosition=2
 
 [Terminal Features]
-BlinkingCursorEnabled=true
+BlinkingCursorEnabled=1
