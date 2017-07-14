@@ -41,4 +41,4 @@ chmod +x newroot.sh &&
 # change root
 echo 'The intial installation is complete. Please run "arch-chroot /mnt" and' &&
 echo 'make sure that the variables in ./newroot.sh are set correctly.' &&
-echo 'After you''re done, please run it.'
+echo 'After you''re done, please run that script.'

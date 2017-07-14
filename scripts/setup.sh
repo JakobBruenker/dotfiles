@@ -39,8 +39,8 @@ makepkg -si --noconfirm &&
 cd ../../dotfiles &&
 
 # vm stuff
-sudo pacman -S --noconfirm virtualbox-guest-utils &&
 sudo pacman -S --noconfirm virtualbox-guest-modules-arch &&
+sudo pacman -S --noconfirm virtualbox-guest-utils &&
 
 # install xorg stuff
 sudo pacman -S --noconfirm xorg-server xorg-xinit &&
@@ -88,4 +88,7 @@ sudo pacman -S --noconfirm wget firefox htop mlocate &&
 # vim
 sudo pacman -S --noconfirm neovim &&
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim &&
-pip install neovim
+pip install neovim &&
+
+echo 'The setup is finished.'
+echo 'Restart the computer and enjoy your Arch Linux experience'
