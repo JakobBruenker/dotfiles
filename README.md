@@ -10,7 +10,7 @@ Installation
 If you need to install Arch, run
 
 ```bash
-wget https://github.com/JakobBruenker/dotfiles/master/scripts/install-arch.zsh
+wget https://raw.githubusercontent.com/JakobBruenker/dotfiles/master/scripts/install-arch.zsh
 chmod +x install-arch.zsh
 ./install-arch.zsh
 ```
@@ -18,7 +18,7 @@ chmod +x install-arch.zsh
 If you already have arch, get the repository, and then run the setup script:
 
 ```bash
-$ git clone https://raw.githubusercontent.com/JakobBruenker/dotfiles.git
+$ git clone https://github.com/JakobBruenker/dotfiles.git
 $ cd dotfiles
 $ scripts/setup.sh
 ```

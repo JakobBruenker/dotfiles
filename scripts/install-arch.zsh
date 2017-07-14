@@ -36,7 +36,7 @@ genfstab -U /mnt >> /mnt/etc/fstab &&
 
 cd /mnt/ &&
 wget https://raw.githubusercontent.com/JakobBruenker/dotfiles/master/scripts/newroot.sh &&
-chmod +x newroot.sh.zsh &&
+chmod +x newroot.sh &&
 
 # change root
 echo 'PLEASE MAKE SURE THE VARIABLES IN ./newroot.sh ARE SET CORRECTLY' &&
