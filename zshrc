@@ -1,3 +1,6 @@
+# vim editing mode
+bindkey -v
+
 # `dir` := `cd dir`
 setopt AUTO_CD
 

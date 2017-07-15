@@ -96,7 +96,7 @@ sudo pacman -S --noconfirm wget surf htop mlocate &&
 sudo pacman -S --noconfirm neovim &&
 # TODO: this was in proprietary for the reason, so that it wouldn't mess with the repo
 curl -fLo $PWD/proprietary/vimplug/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim &&
-ln -sf $PWD/proprietary/vimplug/autoload/ ~/.config/nvim/autoload/
+ln -sf ~/dotfiles/proprietary/vimplug/autoload/ ~/.config/nvim/autoload/ &&
 sudo pip install neovim &&
 
 echo 'The setup is finished.' &&
