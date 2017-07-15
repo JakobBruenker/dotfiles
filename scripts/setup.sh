@@ -9,7 +9,7 @@ sudo pacman -Syyu --noconfirm &&
 mkdir -p ~/.local/share/stack
 mkdir -p ~/.config &&
 ln -sf $PWD/ghc ~/.ghc &&
-ln -sf $PWD/konsole ~/.config/ &&
+ln -sf $PWD/konsole ~/.local/share/ &&
 ln -sf $PWD/nvim ~/.config/ &&
 ln -sf $PWD/stack/config.yaml ~/.local/share/stack/config.yaml &&
 ln -sf $PWD/haskeline ~/.haskeline &&
@@ -80,7 +80,7 @@ cd ../../dotfiles &&
 # konsole
 # you will need to select the correct fira font
 sudo pacman -S --noconfirm konsole &&
-yaourt fira-code-git &&
+yaourt fira-code-git --noconfirm &&
 
 # install other programs
 sudo pacman -S --noconfirm archlinux-keyring python-pip xclip &&
@@ -88,8 +88,8 @@ sudo pacman -S --noconfirm wget firefox htop mlocate &&
 
 # vim
 sudo pacman -S --noconfirm neovim &&
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim &&
-pip install neovim &&
+curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim &&
+sudo pip install neovim &&
 
-echo 'The setup is finished.'
+echo 'The setup is finished.' &&
 echo 'Restart the computer and enjoy your Arch Linux experience'
