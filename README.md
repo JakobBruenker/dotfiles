@@ -19,6 +19,5 @@ If you already have Arch Linux, get the repository, and then run the setup scrip
 
 ```bash
 $ git clone https://github.com/JakobBruenker/dotfiles.git
-$ cd dotfiles
-$ scripts/setup.sh
+$ dotfiles/scripts/setup.sh
 ```

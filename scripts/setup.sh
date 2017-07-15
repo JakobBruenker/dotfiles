@@ -1,6 +1,12 @@
+#!/bin/sh
+
 # download this script and run it
 # but check whether you need the VM stuff
 # (search for vm stuff)
+
+# set working directory
+cd "$(dirname $0)"
+cd ..
 
 # make sure everything is up to date
 sudo pacman -Syyu --noconfirm &&
@@ -80,7 +86,7 @@ cd ../../dotfiles &&
 # konsole
 # you will need to select the correct fira font
 sudo pacman -S --noconfirm konsole &&
-yaourt fira-code-git --noconfirm &&
+yaourt otf-fira-code-git --noconfirm &&
 
 # install other programs
 sudo pacman -S --noconfirm archlinux-keyring python-pip xclip &&
@@ -88,7 +94,9 @@ sudo pacman -S --noconfirm wget surf htop mlocate &&
 
 # vim
 sudo pacman -S --noconfirm neovim &&
-curl -fLo ~/.config/nvim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim &&
+# TODO: this was in proprietary for the reason, so that it wouldn't mess with the repo
+curl -fLo $PWD/proprietary/vimplug/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim &&
+ln -sf $PWD/proprietary/vimplug/autoload/ ~/.config/nvim/autoload/
 sudo pip install neovim &&
 
 echo 'The setup is finished.' &&

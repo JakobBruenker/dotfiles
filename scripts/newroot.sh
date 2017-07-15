@@ -64,8 +64,9 @@ read &&
 EDITOR=vi &&
 visudo &&
 
+rm /newroot.sh &&
+
 # at this point, you can reboot into the installed OS
 echo 'The installation is finished. At this point, you can reboot into the' &&
 echo 'installed OS and proceed with the configuration.' &&
-echo 'You should also remove /newroot.sh' &&
 echo 'The dotfiles repository has been downloaded to ~/dotfiles.'
