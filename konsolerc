@@ -1,0 +1,18 @@
+[Desktop Entry]
+DefaultProfile=Profile1.profile
+
+[Favorite Profiles]
+Favorites=Profile1.profile
+
+[KonsoleWindow]
+SaveGeometryOnExit=false
+ShowAppNameOnTitleBar=false
+ShowMenuBarByDefault=false
+
+[MainWindow]
+MenuBar=Disabled
+State=AAAA/wAAAAD9AAAAAAAABRoAAALEAAAABAAAAAQAAAAIAAAACPwAAAAA
+ToolBarsMovable=Disabled
+
+[TabBar]
+TabBarVisibility=AlwaysHideTabBar

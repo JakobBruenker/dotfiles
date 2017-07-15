@@ -16,6 +16,8 @@ mkdir -p ~/.local/share/stack
 mkdir -p ~/.config &&
 ln -sf $PWD/ghc ~/.ghc &&
 ln -sf $PWD/konsole ~/.local/share/ &&
+ln -sf $PWD/konsolerc ~/.config/ &&
+ln -sf $PWD/konsole.kmessagebox ~/.config/ &&
 ln -sf $PWD/nvim ~/.config/ &&
 ln -sf $PWD/stack/config.yaml ~/.local/share/stack/config.yaml &&
 ln -sf $PWD/haskeline ~/.haskeline &&
