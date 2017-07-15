@@ -84,7 +84,7 @@ yaourt fira-code-git --noconfirm &&
 
 # install other programs
 sudo pacman -S --noconfirm archlinux-keyring python-pip xclip &&
-sudo pacman -S --noconfirm wget firefox htop mlocate &&
+sudo pacman -S --noconfirm wget surf htop mlocate &&
 
 # vim
 sudo pacman -S --noconfirm neovim &&
