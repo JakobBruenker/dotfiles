@@ -73,9 +73,23 @@ Xft.hintstyle: hintfull
 !urxvt*font: xft:Bitstream Vera Sans Mono-12
 !urxvt*boldFont: xft:Bitstream Vera Sans Mono-12:bold
 !urxvt*italicFont: xft:Bitstream Vera Sans Mono-12:italic
-urxvt*font: xft:Monaco for Powerline:size=11
-urxvt*boldFont: xft:Monaco for Powerline:size=11:bold
-urxvt*italicFont: xft:Monaco for Powerline:size=11:italic
+!urxvt*font: xft:Monaco for Powerline:size=11
+!urxvt*boldFont: xft:Monaco for Powerline:size=11:bold
+!urxvt*italicFont: xft:Monaco for Powerline:size=11:italic
+
+/* urxvt*font: xft:DejaVu Sans Mono for Powerline:size=11 */
+/* urxvt*boldFont: xft:DejaVu Sans Mono for Powerline:size=11:bold */
+/* urxvt*italicFont: xft:DejaVu Sans Mono for Powerline:size=11:italic */
+/* xterm*faceName:DejaVu Sans Mono for Powerline:pixelsize=12 */
+/* URxvt_font : --dejavu sans mono-----------iso8859- */
+
+urxvt*font: xft:Fira Code Retina:size=11
+urxvt*boldFont: xft:Fira Code Retina:size=11:bold
+urxvt*italicFont: xft:Fira Code Retina:size=11:italic
+
+!urxvt*font: xft:Fantasque Sans Mono:size=11
+!urxvt*boldFont: xft:Fantasque Sans Mono:size=11:bold
+!urxvt*italicFont: xft:Fantasque Sans Mono:size=11:italic
 
 urxvt.iso14755: false
 urxvt.iso14755_52: false

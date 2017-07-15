@@ -101,5 +101,8 @@ curl -fLo $PWD/proprietary/vimplug/autoload/plug.vim --create-dirs https://raw.g
 ln -sf ~/dotfiles/proprietary/vimplug/autoload/ ~/.config/nvim/autoload/ &&
 sudo pip install neovim &&
 
+# locale
+sudo locale-gen en_US.UTF-8
+
 echo 'The setup is finished.' &&
 echo 'Restart the computer and enjoy your Arch Linux experience'
