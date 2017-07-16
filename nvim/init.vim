@@ -24,7 +24,7 @@ let mapleader      = ","
 " We can see the mode in airline anyway
 set noshowmode
 
-set list listchars=tab:├╶,trail:⋅,nbsp:␣
+set list listchars=tab:├╶,trail:·,nbsp:␣
 let &showbreak=' ↪'
 set breakindent
 

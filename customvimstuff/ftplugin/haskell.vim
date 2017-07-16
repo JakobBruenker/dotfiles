@@ -69,7 +69,7 @@ vnoremap ,s. :EasyAlign<CR><C-X>-><CR>
 
 inoremap <LocalLeader>: <ESC>yypA<Space><ESC>kA<Space>::<Space>
 inoremap -. <Space>-><Space>
-inoremap -, <Space><-<Space>
+inoremap ,- <Space><-<Space>
 inoremap :: <Space>::<Space>
 
 " }}}
