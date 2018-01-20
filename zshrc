@@ -86,10 +86,13 @@ alias dvp='xmodmap ~/.Xmodmap'
 alias h.r='xmodmap ~/.Xmodmap'
 alias jeo='xmodmap ~/.Xmodmap'
 alias swm='sudo wifi-menu'
+alias reboot='systemctl reboot'
+alias poweroff='systemctl poweroff'
+alias activate='source bin/activate'
 
 # Environment variables
 
-export PATH=$HOME/dotfiles/scripts:$HOME/.local/bin:$PATH
+export PATH=$HOME/dotfiles/scripts:$HOME/.local/bin:/opt/cuda/bin:$PATH
 
 # prompt should really be set in .zpreztorc, but this way, I get the clock from
 # paradox with the pure prompt

@@ -47,8 +47,8 @@ makepkg -si --noconfirm &&
 cd ../../dotfiles &&
 
 # vm stuff
-sudo pacman -S --noconfirm virtualbox-guest-modules-arch &&
-sudo pacman -S --noconfirm virtualbox-guest-utils &&
+# sudo pacman -S --noconfirm virtualbox-guest-modules-arch &&
+# sudo pacman -S --noconfirm virtualbox-guest-utils &&
 
 # install xorg stuff
 sudo pacman -S --noconfirm xorg-server xorg-xinit &&
@@ -56,7 +56,7 @@ sudo mkdir -p /etc/X11 &&
 sudo ln -sf $PWD/xorg.conf.d /etc/X11/xorg.conf.d &&
 
 # various programs that are started by startx
-sudo pacman -S --noconfirm wmname unclutter feh xcompmgr &&
+sudo pacman -S --noconfirm wmname unclutter feh nitrogen compton &&
 
 # custom dwm
 sudo pacman -S --noconfirm libxft &&
@@ -96,13 +96,14 @@ sudo pacman -S --noconfirm wget surf htop mlocate &&
 
 # vim
 sudo pacman -S --noconfirm neovim &&
-# TODO: this was in proprietary for the reason, so that it wouldn't mess with the repo
+# TODO: this was in proprietary so that it wouldn't mess with the repo
 curl -fLo $PWD/proprietary/vimplug/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim &&
 ln -sf ~/dotfiles/proprietary/vimplug/autoload/ ~/.config/nvim/autoload/ &&
 sudo pip install neovim &&
 
 # locale
-sudo locale-gen en_US.UTF-8
+# for some reason, you might have to repeat this after you reboot.
+sudo locale-gen en_US.UTF-8 &&
 
 echo 'The setup is finished.' &&
 echo 'Restart the computer and enjoy your Arch Linux experience'

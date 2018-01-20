@@ -74,12 +74,7 @@ call plug#begin('~/.vim/plugged')
 Plug 'aaronbieber/vim-quicktask'
 Plug 'airblade/vim-gitgutter'
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'easymotion/vim-easymotion'
 Plug 'garbas/vim-snipmate'
-Plug 'haya14busa/incsearch-easymotion.vim'
-Plug 'haya14busa/incsearch.vim'
-Plug 'haya14busa/vim-easyoperator-line'
-Plug 'haya14busa/vim-easyoperator-phrase'
 Plug 'haya14busa/vim-operator-flashy'
 Plug 'junegunn/vim-easy-align'
 Plug 'kana/vim-operator-user'
@@ -88,7 +83,6 @@ Plug 'majutsushi/tagbar'
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'mkitt/tabline.vim'
 Plug 'neomake/neomake'
-Plug 'osyo-manga/vim-over'
 Plug 'romainl/flattened'
 Plug 'scrooloose/nerdtree'
 Plug 'tomtom/tlib_vim'
@@ -142,19 +136,6 @@ let g:quicktask_snip_path = '~/.quicktaskSnips'
 
 " }}}
 
-" {{{ EASYMOTION
-
-let g:EasyMotion_startofline = 0
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_keys='aoeidtns''.pyfgcrlqjkxbmwvzu()=*}+{][!&#/-h:,'
-augroup EasyMotion
-	" do this to avoid hit enter prompt on overwin commands
-	autocmd!
-	autocmd WinLeave * silent
-augroup END
-
-" }}}
-
 " {{{ NERDTREE
 
 let g:NERDTreeQuitOnOpen = 1
@@ -179,8 +160,9 @@ let g:NERDTreeIndicatorMapCustom = {
 
 " {{{ GITGUTTER
 
+set signcolumn=yes
+
 let g:gitgutter_map_keys = 0
-let g:gitgutter_sign_column_always = 1
 let g:gitgutter_max_signs = 1000
 
 " }}}
@@ -336,6 +318,9 @@ nnoremap <silent> <Leader><Leader><Leader>s :call OpenSession()<CR>
 
 nnoremap <Leader>q gwip
 
+noremap : ;
+noremap ; :
+
 vnoremap . :normal .<CR>
 vnoremap < <gv
 vnoremap > >gv
@@ -358,30 +343,6 @@ nnoremap <silent> <Leader>nt :NERDTreeToggle<CR>
 nnoremap <silent> <Leader>tb :TagbarToggle<CR>:call ResizeTerm()<CR>
 
 map <Leader>ds <Plug>Dsurround
-
-map e <Plug>(easymotion-prefix)
-sunmap e
-map s <Plug>(easymotion-bd-jk)
-sunmap s
-map t <Plug>(easymotion-s)
-sunmap t
-map <silent> T <Plug>(easymotion-overwin-f)
-sunmap T
-
-noremap es s
-map ge <Plug>(easymotion-ge)
-sunmap ge
-map gE <Plug>(easymotion-gE)
-sunmap gE
-map e/ <Plug>(incsearch-easymotion-/)
-sunmap e/
-map e? <Plug>(incsearch-easymotion-?)
-sunmap e?
-map en <Plug>(easymotion-bd-n)
-sunmap en
-
-map <silent> <Leader><Leader>s :OverCommandLine<CR>%s/\v
-sunmap <Leader><Leader>s
 
 nnoremap <silent> <Leader>p :CtrlPMixed<CR>
 
@@ -444,7 +405,7 @@ inoremap <expr> <CR> (pumvisible() ? "<C-Y>" : "") . <SID>NextOrNewLine()
 
 inoremap <expr> <TAB> (pumvisible() ? "<C-N>" : "<TAB>")
 inoremap <S-TAB> <C-P>
-nnoremap <expr> <Leader><CR> <SID>NextOrNewLineNormal()
+nnoremap <expr> <Leader><Leader><CR> <SID>NextOrNewLineNormal()
 
 inoremap <Leader>f <C-X><C-F>
 
